@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="三題趣味測驗，測出你是哪一派玩家玄學流派，看看玩家之間流傳的迷信與儀式感。">
+  <title>雲林宗瑋｜玩家玄學測驗</title>
+  <style>
+    :root {
+      --ink: #151311;
+      --ink-soft: #211b18;
+      --paper: #e8dcc4;
+      --paper-light: #f3ead7;
+      --red: #672d2d;
+      --red-deep: #401c1c;
+      --gold: #b9a06a;
+      --gold-soft: #d0bc8d;
+      --shadow-offset: 7px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    html,
+    body {
+      background: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      color: var(--paper);
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    .page {
+      position: relative;
+      isolation: isolate;
+      width: 100%;
+      max-width: 680px;
+      min-height: 100vh;
+      margin: 0 auto;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(103, 45, 45, 0.22), transparent 34%),
+        radial-gradient(circle at 86% 82%, rgba(103, 45, 45, 0.14), transparent 32%),
+        linear-gradient(rgba(232, 220, 196, 0.018) 1px, transparent 1px),
+        var(--ink-soft);
+      background-size: auto, auto, 100% 31px, auto;
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      z-index: -1;
+      border: 1px solid rgba(185, 160, 106, 0.22);
+      border-radius: 18px;
+      pointer-events: none;
+    }
+
+    .blob {
+      position: absolute;
+      z-index: -1;
+      border-radius: 58% 42% 49% 51% / 45% 56% 44% 55%;
+      background:
+        radial-gradient(circle at 35% 40%, rgba(185, 160, 106, 0.15), transparent 43%),
+        radial-gradient(circle at 68% 60%, rgba(103, 45, 45, 0.22), transparent 55%);
+      filter: blur(28px);
+      animation: aura-flow 16s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .blob-one {
+      top: -90px;
+      right: -105px;
+      width: 290px;
+      height: 290px;
+    }
+
+    .blob-two {
+      bottom: -105px;
+      left: -125px;
+      width: 330px;
+      height: 330px;
+      opacity: 0.72;
+      animation-delay: -7s;
+      animation-duration: 19s;
+    }
+
+    .hero {
+      width: min(100%, 560px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(48px, 8vh, 76px) 24px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      align-self: center;
+      margin: 0 0 26px;
+      padding: 7px 14px;
+      border: 1.5px solid rgba(185, 160, 106, 0.72);
+      border-radius: 999px;
+      background: rgba(64, 28, 28, 0.72);
+      color: var(--paper-light);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--paper-light);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: clamp(2.25rem, 10vw, 4rem);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: 0.035em;
+      text-wrap: balance;
+      text-shadow: 0 3px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .highlight {
+      display: block;
+      margin: 0.08em 0;
+      padding: 0;
+      color: var(--gold-soft);
+      background: none;
+      font-size: 0.84em;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.38);
+    }
+
+    .possibilities {
+      margin: 24px 0 0;
+      color: var(--gold-soft);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: clamp(1.05rem, 4.8vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 0.13em;
+    }
+
+    .hint {
+      margin: 12px 0 30px;
+      color: #c6b99f;
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    .intro-card {
+      position: relative;
+      width: 100%;
+      margin: 0 auto 30px;
+      padding: 22px 24px;
+      border: 2px solid var(--gold);
+      border-radius: 18px;
+      background: rgba(232, 220, 196, 0.95);
+      box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--red-deep);
+      color: #322922;
+      text-align: left;
+    }
+
+    .intro-card::before {
+      content: "“";
+      position: absolute;
+      top: 7px;
+      right: 18px;
+      color: rgba(103, 45, 45, 0.28);
+      font-family: Georgia, serif;
+      font-size: 4.2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .intro-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    .intro-card p {
+      margin: 0;
+      color: #493c33;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .start-button {
+      width: 100%;
+      min-height: 58px;
+      padding: 14px 24px;
+      border: 2px solid var(--gold-soft);
+      border-radius: 16px;
+      background: var(--red);
+      box-shadow: var(--shadow-offset) var(--shadow-offset) 0 #0a0908;
+      color: var(--paper-light);
+      font: inherit;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+    }
+
+    .duration {
+      margin: 18px 0 0;
+      color: #bcae94;
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .quiz-screen {
+      width: min(100%, 580px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 36px 24px 46px;
+    }
+
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--gold-soft);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .quiz-topline p {
+      margin: 0;
+    }
+
+    .question-count {
+      flex: 0 0 auto;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      margin: 15px 0 42px;
+      overflow: hidden;
+      border: 1px solid rgba(185, 160, 106, 0.52);
+      border-radius: 999px;
+      background: rgba(10, 9, 8, 0.58);
+    }
+
+    .progress-fill {
+      width: 33.333%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      transition: width 320ms ease;
+    }
+
+    .question-number {
+      margin: 0 0 13px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+    }
+
+    .question-title {
+      margin: 0;
+      color: var(--paper-light);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: clamp(1.9rem, 8vw, 3rem);
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: 0.035em;
+      text-wrap: balance;
+    }
+
+    .question-hint {
+      margin: 14px 0 28px;
+      color: #bcae94;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .answers {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .answer-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: center;
+      gap: 12px;
+      min-height: 76px;
+      padding: 15px 17px;
+      border: 1.5px solid rgba(185, 160, 106, 0.72);
+      border-radius: 15px;
+      background: rgba(33, 27, 24, 0.88);
+      box-shadow: 4px 4px 0 rgba(10, 9, 8, 0.85);
+      color: var(--paper);
+      cursor: pointer;
+      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .answer-card input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .answer-letter {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold-soft);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+    }
+
+    .answer-text {
+      min-width: 0;
+      font-size: 1rem;
+      line-height: 1.55;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    .answer-card:has(input:checked) {
+      border-color: var(--gold-soft);
+      background: var(--red-deep);
+      transform: translate(-2px, -2px);
+    }
+
+    .answer-card:has(input:checked) .answer-letter {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .answer-card:focus-within {
+      outline: 3px solid rgba(208, 188, 141, 0.34);
+      outline-offset: 3px;
+    }
+
+    .next-button {
+      width: 100%;
+      min-height: 58px;
+      margin-top: 28px;
+      padding: 14px 24px;
+      border: 2px solid var(--gold-soft);
+      border-radius: 16px;
+      background: var(--red);
+      box-shadow: var(--shadow-offset) var(--shadow-offset) 0 #0a0908;
+      color: var(--paper-light);
+      font: inherit;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: opacity 180ms ease;
+    }
+
+    .next-button:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
+    .nav-actions {
+      display: grid;
+      gap: 17px;
+      margin-top: 28px;
+    }
+
+    .nav-actions .next-button {
+      margin-top: 0;
+    }
+
+    .back-button {
+      justify-self: center;
+      padding: 5px 9px;
+      border: 0;
+      border-bottom: 1px solid rgba(208, 188, 141, 0.52);
+      background: transparent;
+      color: #c6b99f;
+      font: inherit;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .calculation-screen {
+      width: min(100%, 560px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 44px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .spinner {
+      position: relative;
+      width: 92px;
+      height: 92px;
+      margin-bottom: 30px;
+      border: 2px solid rgba(185, 160, 106, 0.2);
+      border-top-color: var(--gold-soft);
+      border-right-color: var(--red);
+      border-radius: 50%;
+      box-shadow: 0 0 32px rgba(103, 45, 45, 0.28);
+      animation: spin 1.1s linear infinite;
+    }
+
+    .spinner::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(208, 188, 141, 0.42);
+      border-radius: 50%;
+    }
+
+    .calculation-text {
+      margin: 0;
+      color: var(--paper-light);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+    }
+
+    .result-screen {
+      width: min(100%, 580px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 38px 24px 46px;
+    }
+
+    .result-kicker {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-align: center;
+    }
+
+    .result-type {
+      width: fit-content;
+      margin: 0 auto 18px;
+      padding: 7px 15px;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      background: rgba(64, 28, 28, 0.72);
+      color: var(--gold-soft);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .result-title {
+      margin: 0 0 18px;
+      color: var(--paper-light);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: clamp(2rem, 8.8vw, 3.3rem);
+      line-height: 1.35;
+      letter-spacing: 0.035em;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .result-summary {
+      margin: 0 auto 30px;
+      color: var(--gold-soft);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.75;
+      text-align: center;
+    }
+
+    .result-card {
+      margin-bottom: 18px;
+      padding: 21px 20px;
+      border: 1.5px solid rgba(185, 160, 106, 0.74);
+      border-radius: 16px;
+      background: rgba(33, 27, 24, 0.9);
+      box-shadow: 5px 5px 0 rgba(10, 9, 8, 0.82);
+    }
+
+    .result-card h3 {
+      margin: 0 0 10px;
+      color: var(--gold-soft);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: 1.12rem;
+      letter-spacing: 0.06em;
+    }
+
+    .result-card p {
+      margin: 0;
+      color: var(--paper);
+      font-size: 1rem;
+      line-height: 1.78;
+    }
+
+    .result-card.reminder {
+      border-color: rgba(103, 45, 45, 0.88);
+      background: rgba(64, 28, 28, 0.7);
+    }
+
+    .result-card.reminder h3 {
+      color: #c88d7d;
+    }
+
+    .personalized-grid {
+      display: grid;
+      gap: 18px;
+      margin: 28px 0;
+    }
+
+    .personalized-card {
+      padding: 21px 20px;
+      border: 1.5px solid var(--gold);
+      border-radius: 16px;
+      background: rgba(232, 220, 196, 0.95);
+      box-shadow: 5px 5px 0 var(--red-deep);
+      color: #332922;
+    }
+
+    .personalized-card h3 {
+      margin: 0 0 10px;
+      color: var(--red-deep);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: 1.08rem;
+      line-height: 1.5;
+    }
+
+    .personalized-card p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .line-cta {
+      margin-top: 32px;
+      padding: 26px 21px;
+      border: 2px solid var(--gold-soft);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #5c2929, #381919);
+      box-shadow: var(--shadow-offset) var(--shadow-offset) 0 #0a0908;
+      text-align: center;
+    }
+
+    .line-cta h3 {
+      margin: 0 0 10px;
+      color: var(--paper-light);
+      font-family: "Noto Serif TC", "Songti TC", "STSong", "PMingLiU", serif;
+      font-size: 1.35rem;
+      line-height: 1.45;
+    }
+
+    .line-cta p {
+      margin: 0 0 19px;
+      color: #d8ccb4;
+      font-size: 0.96rem;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    .line-button {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #183c28;
+      border-radius: 13px;
+      background: #3f7855;
+      box-shadow: 5px 5px 0 #122a1d;
+      color: #fffdf7;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.45;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .restart-button {
+      display: block;
+      margin: 30px auto 0;
+      padding: 7px 10px;
+      border: 0;
+      border-bottom: 1px solid rgba(208, 188, 141, 0.54);
+      background: transparent;
+      color: var(--gold-soft);
+      font: inherit;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .disclaimer {
+      margin: 30px 0 0;
+      color: #8f8370;
+      font-size: 0.78rem;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes aura-flow {
+      0% {
+        border-radius: 58% 42% 49% 51% / 45% 56% 44% 55%;
+        transform: translate3d(-8px, 5px, 0) rotate(0deg) scale(0.92);
+      }
+      50% {
+        border-radius: 42% 58% 63% 37% / 58% 39% 61% 42%;
+        transform: translate3d(15px, -12px, 0) rotate(8deg) scale(1.08);
+      }
+      100% {
+        border-radius: 61% 39% 43% 57% / 38% 62% 38% 62%;
+        transform: translate3d(-4px, 14px, 0) rotate(-6deg) scale(0.98);
+      }
+    }
+
+    @media (min-width: 681px) {
+      body {
+        padding: 28px 0;
+      }
+
+      .page {
+        min-height: calc(100vh - 56px);
+        border: 1px solid rgba(185, 160, 106, 0.28);
+        border-radius: 28px;
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.52);
+      }
+
+      .hero {
+        min-height: calc(100vh - 56px);
+      }
+
+      .quiz-screen {
+        min-height: calc(100vh - 56px);
+      }
+    }
+
+    @media (max-height: 760px) {
+      .hero {
+        justify-content: flex-start;
+        padding-top: 36px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blob {
+        animation: none;
+      }
+
+      .spinner {
+        animation-duration: 2.4s;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="blob blob-one" aria-hidden="true"></div>
+    <div class="blob blob-two" aria-hidden="true"></div>
+
+    <section class="hero" id="cover" aria-labelledby="quiz-title">
+      <p class="eyebrow" id="cover-eyebrow"></p>
+
+      <h1 id="quiz-title"></h1>
+
+      <p class="possibilities" id="cover-possibilities"></p>
+      <p class="hint" id="cover-hint"></p>
+
+      <article class="intro-card">
+        <strong id="intro-name"></strong>
+        <p id="intro-copy"></p>
+      </article>
+
+      <button class="start-button" id="start-quiz" type="button"></button>
+      <p class="duration" id="cover-duration"></p>
+    </section>
+
+    <section class="quiz-screen" id="quiz-screen" aria-labelledby="question-title" hidden>
+      <header>
+        <div class="quiz-topline">
+          <p id="quiz-label"></p>
+          <p class="question-count" id="question-count" aria-live="polite"></p>
+        </div>
+        <div class="progress-track" id="progress-track" role="progressbar" aria-label="測驗進度" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </header>
+
+      <p class="question-number" id="question-number"></p>
+      <h2 class="question-title" id="question-title"></h2>
+      <p class="question-hint" id="question-hint"></p>
+
+      <fieldset class="answers" id="answers" aria-label="題目答案"></fieldset>
+
+      <div class="nav-actions">
+        <button class="next-button" id="next-question" type="button" disabled></button>
+        <button class="back-button" id="previous-question" type="button" hidden></button>
+      </div>
+    </section>
+
+    <section class="calculation-screen" id="calculation-screen" aria-live="polite" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="calculation-text" id="calculation-text"></p>
+    </section>
+
+    <section class="result-screen" id="result-screen" aria-labelledby="result-title" hidden>
+      <p class="result-kicker" id="result-kicker"></p>
+      <p class="result-type" id="result-type"></p>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-summary" id="result-summary"></p>
+
+      <article class="result-card">
+        <h3 id="analysis-label"></h3>
+        <p id="result-analysis"></p>
+      </article>
+
+      <article class="result-card reminder">
+        <h3 id="reminder-label"></h3>
+        <p id="result-reminder"></p>
+      </article>
+
+      <div class="personalized-grid">
+        <article class="personalized-card">
+          <h3 id="drain-label"></h3>
+          <p id="result-drain"></p>
+        </article>
+
+        <article class="personalized-card">
+          <h3 id="action-label"></h3>
+          <p id="result-action"></p>
+        </article>
+      </div>
+
+      <aside class="line-cta">
+        <h3 id="line-title"></h3>
+        <p id="line-description"></p>
+        <a class="line-button" id="line-button" href="#"></a>
+      </aside>
+
+      <button class="restart-button" id="restart-quiz" type="button"></button>
+      <p class="disclaimer" id="disclaimer"></p>
+    </section>
+  </main>
+
+  <script>
+    // ===== 母版內容設定：建立新測驗時，優先修改以下資料物件 =====
+    const SITE_CONFIG = {
+      siteName: "雲林宗瑋｜玩家玄學測驗",
+      pageTitle: "雲林宗瑋｜玩家玄學測驗",
+      personaName: "雲林宗瑋",
+      lineButtonText: "加入官方LINE了解更多",
+      lineUrl: "",
+      metaDescription: "三題趣味測驗，測出你是哪一派玩家玄學流派，看看玩家之間流傳的迷信與儀式感。",
+      introGreeting: "Hi，我是{name}",
+      lineDescription: "加入{name}官方LINE\n了解更多娛樂城玩法、活動資訊、玩家經驗與注意事項",
+      cover: {
+        eyebrow: "玩家迷信 · 玄學娛樂",
+        titleBefore: "每個玩家<br>都有一套",
+        titleHighlight: "不肯承認的玄學",
+        titleAfter: ["你是哪一派？"],
+        possibilities: "換座位、挑時辰、帶幸運物、相信氣場",
+        hint: "三題測出你的玩家玄學流派",
+        introLines: ["分享玩家之間流傳的迷信、玄學故事", "以及各種娛樂遊戲的真實經驗與文化"],
+        startButtonText: "開始測驗",
+        duration: "只要三題，不到一分鐘"
+      },
+      labels: {
+        quizName: "玩家玄學流派 · 趣味測驗",
+        next: "下一題",
+        result: "看我的結果",
+        previous: "回上一題",
+        calculating: "正在對照你的玩家習慣",
+        analysis: "玩家之間的輕鬆解析",
+        reminder: "這一派玩家常見的行為",
+        drain: "不順時最容易出現的反應",
+        action: "你最感興趣的娛樂內容",
+        lineTitle: "想了解更多玩家才知道的娛樂資訊？",
+        resultKicker: "你的玩家玄學流派",
+        questionPrefix: "QUESTION",
+        restart: "重新測一次",
+        disclaimer: "玄學與迷信僅為娛樂文化分享，不代表任何獲利保證。請量力而為，未滿18歲請勿參與。",
+        lineNotReady: "官方LINE連結尚未設定"
+      }
+    };
+
+    const cover = document.getElementById("cover");
+    const quizScreen = document.getElementById("quiz-screen");
+    const calculationScreen = document.getElementById("calculation-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const startButton = document.getElementById("start-quiz");
+    const nextButton = document.getElementById("next-question");
+    const previousButton = document.getElementById("previous-question");
+    const questionCount = document.getElementById("question-count");
+    const progressTrack = document.getElementById("progress-track");
+    const progressFill = document.getElementById("progress-fill");
+    const questionNumber = document.getElementById("question-number");
+    const questionTitle = document.getElementById("question-title");
+    const questionHint = document.getElementById("question-hint");
+    const answersContainer = document.getElementById("answers");
+    const resultType = document.getElementById("result-type");
+    const resultTitle = document.getElementById("result-title");
+    const resultSummary = document.getElementById("result-summary");
+    const resultAnalysis = document.getElementById("result-analysis");
+    const resultReminder = document.getElementById("result-reminder");
+    const resultDrain = document.getElementById("result-drain");
+    const resultAction = document.getElementById("result-action");
+    const restartButton = document.getElementById("restart-quiz");
+    const coverEyebrow = document.getElementById("cover-eyebrow");
+    const coverTitle = document.getElementById("quiz-title");
+    const coverPossibilities = document.getElementById("cover-possibilities");
+    const coverHint = document.getElementById("cover-hint");
+    const introName = document.getElementById("intro-name");
+    const introCopy = document.getElementById("intro-copy");
+    const coverDuration = document.getElementById("cover-duration");
+    const quizLabel = document.getElementById("quiz-label");
+    const calculationText = document.getElementById("calculation-text");
+    const analysisLabel = document.getElementById("analysis-label");
+    const reminderLabel = document.getElementById("reminder-label");
+    const drainLabel = document.getElementById("drain-label");
+    const actionLabel = document.getElementById("action-label");
+    const lineTitle = document.getElementById("line-title");
+    const lineDescription = document.getElementById("line-description");
+    const lineButton = document.getElementById("line-button");
+    const disclaimer = document.getElementById("disclaimer");
+    const resultKicker = document.getElementById("result-kicker");
+
+    const QUESTIONS = [
+      {
+        title: ["準備開始娛樂以前", "哪個動作最能讓你安心？"],
+        hint: "不用想太久，選一個最像你平常習慣的動作。",
+        options: [
+          "使用固定的手機、位置或習慣的操作方式",
+          "挑自己覺得吉利的時間、日期或數字",
+          "戴幸運物、拜財神，或者先做自己的祈福儀式",
+          "什麼都不準備，當下感覺對了就直接開始"
+        ]
+      },
+      {
+        title: ["遇到連續不順的時候", "你最容易出現哪個念頭？"],
+        hint: "回想最近一次不順，你第一個冒出的想法是什麼？",
+        options: [
+          "這個位置或裝置不對，換一個可能會比較順",
+          "今天的時辰不對，應該先停一下再說",
+          "可能被別人的氣場影響，或者有人把運氣帶走了",
+          "只是自己的節奏亂掉，洗個手、休息一下重新開始"
+        ]
+      },
+      {
+        title: ["關於娛樂城和玩家文化", "你最想了解哪一類內容？"],
+        hint: "選一個你真的會想點開看的主題。",
+        options: [
+          "不同遊戲的玩法、規則與玩家經驗",
+          "娛樂城活動、優惠與最新資訊",
+          "玩家常見問題、風險控制與注意事項",
+          "玩家迷信、求財文化與玄學故事"
+        ]
+      }
+    ];
+
+    const RESULTS = {
+      A: {
+          type: "固定儀式派",
+          title: ["熟悉的流程", "就是你的安心開關"],
+          summary: "你相信熟悉的環境和固定流程能讓自己比較穩。固定的位置、裝置和操作習慣，對你來說就像進入狀態的開關。",
+          analysis: "你嘴上可能會說只是用得順手，實際上少了那套固定流程，心裡就會覺得哪裡怪怪的。這種儀式感的作用，是幫你把注意力拉回來；至於結果如何，還是要靠理性判斷和適可而止。",
+          reminder: "固定使用熟悉的裝置和位置，開始前會照自己的順序準備；臨時換環境時，常忍不住覺得今天的節奏少了一拍。"
+      },
+      B: {
+          type: "吉時數字派",
+          title: ["時機和數字對了", "信心自然就來了"],
+          summary: "你對時間、日期、數字和特殊巧合特別敏感。看到順眼的數字或覺得時機到了，心裡會自然多一點信心。",
+          analysis: "別人看到的是普通數字，你看到的可能是一個暗號。挑時間和數字讓你多一點期待，也讓娛樂多一層故事性；只是再漂亮的數字，也不會替人保證任何結果。",
+          reminder: "會留意日期、時間和重複出現的數字，遇到覺得吉利的組合就心情特別好，不順時也比較願意先停下來等下一個時機。"
+      },
+      C: {
+          type: "求財氣場派",
+          title: ["先把氣場顧好", "你才覺得可以開始"],
+          summary: "你相信人的氣場、幸運物和求財儀式會影響當天狀態。比起完全靠運氣，你更喜歡先讓自己心裡安定。",
+          analysis: "幸運物對你來說不只是裝飾，更像是一顆隨身的安心按鈕。儀式做完，心情比較定，做決定也不容易慌；它提供的是心理上的安定感，不會改變遊戲本身的機率。",
+          reminder: "身上常有固定的幸運物，開始前可能會拜拜、祈福或整理周遭氣場；少做一個步驟，就會忍不住懷疑是不是準備得不夠完整。"
+      },
+      D: {
+          type: "直覺轉運派",
+          title: ["嘴上說不迷信", "身體倒是很誠實"],
+          summary: "你不一定承認自己迷信，但只要感覺不對，就會想換個方式、休息一下或重新開始。你最相信的是當下直覺。",
+          analysis: "你沒有固定儀式，卻很懂得替自己按下重整鍵。換位置、洗個手或休息一下，看起來隨性，其實是在整理情緒和節奏；直覺可以提醒你停下來，但不能代替風險判斷。",
+          reminder: "感覺順就直接開始，感覺不對就換方法或休息一下。你最常說自己不迷信，下一秒卻已經默默完成一套臨時轉運流程。"
+      }
+    };
+
+    const DRAINS = {
+      A: "一不順，你最先懷疑的是位置或裝置，換個座位、換支手機，好像整個人的節奏也能一起重新開機。",
+      B: "你會覺得今天的時辰可能不太配合，與其一直硬撐，不如先停一下，等心情和時間都順眼一點再說。",
+      C: "你第一個想到的是現場氣場，可能有人帶走了運氣，也可能周遭氛圍讓你分心。先離開一下，通常比繼續糾結舒服。",
+      D: "你比較傾向把不順看成自己的節奏亂了。洗個手、喝口水或休息一下，就是你最簡單也最常用的重整方式。"
+    };
+
+    const ACTIONS = {
+      A: "你最想了解不同遊戲的玩法、規則和玩家實際經驗。比起只聽結果，你更想先把遊戲怎麼運作弄清楚。",
+      B: "你對娛樂城活動、優惠和最新資訊最有興趣，也會想知道條件和限制，避免只看到醒目的標題就錯過細節。",
+      C: "你更關心玩家常見問題、風險控制和注意事項。知道哪些情況該停、怎麼量力而為，對你來說比氣氛熱鬧更重要。",
+      D: "你最有興趣的是玩家迷信、求財文化和玄學故事。那些半信半疑又代代流傳的說法，就是玩家文化最好聊的部分。"
+    };
+
+    const selectedAnswers = Array(QUESTIONS.length).fill(null);
+    let currentQuestion = 0;
+
+    function renderSiteContent() {
+      document.title = SITE_CONFIG.pageTitle;
+      document.querySelector('meta[name="description"]').content = SITE_CONFIG.metaDescription;
+      coverEyebrow.textContent = SITE_CONFIG.cover.eyebrow;
+      coverTitle.innerHTML = `${SITE_CONFIG.cover.titleBefore}<span class="highlight">${SITE_CONFIG.cover.titleHighlight}</span><br>${SITE_CONFIG.cover.titleAfter.join("<br>")}`;
+      coverPossibilities.textContent = SITE_CONFIG.cover.possibilities;
+      coverHint.textContent = SITE_CONFIG.cover.hint;
+      introName.textContent = SITE_CONFIG.introGreeting.replace("{name}", SITE_CONFIG.personaName);
+      introCopy.innerHTML = SITE_CONFIG.cover.introLines.join("<br>");
+      startButton.textContent = SITE_CONFIG.cover.startButtonText;
+      coverDuration.textContent = SITE_CONFIG.cover.duration;
+      quizLabel.textContent = SITE_CONFIG.labels.quizName;
+      previousButton.textContent = SITE_CONFIG.labels.previous;
+      calculationText.textContent = SITE_CONFIG.labels.calculating;
+      resultKicker.textContent = SITE_CONFIG.labels.resultKicker;
+      analysisLabel.textContent = SITE_CONFIG.labels.analysis;
+      reminderLabel.textContent = SITE_CONFIG.labels.reminder;
+      drainLabel.textContent = SITE_CONFIG.labels.drain;
+      actionLabel.textContent = SITE_CONFIG.labels.action;
+      lineTitle.textContent = SITE_CONFIG.labels.lineTitle;
+      lineDescription.textContent = SITE_CONFIG.lineDescription.replace("{name}", SITE_CONFIG.personaName);
+      lineButton.textContent = SITE_CONFIG.lineButtonText;
+      lineButton.href = SITE_CONFIG.lineUrl || "#";
+      restartButton.textContent = SITE_CONFIG.labels.restart;
+      disclaimer.textContent = SITE_CONFIG.labels.disclaimer;
+    }
+
+    function renderQuestion() {
+      const question = QUESTIONS[currentQuestion];
+      const displayNumber = String(currentQuestion + 1).padStart(2, "0");
+
+      questionCount.textContent = `${currentQuestion + 1} / ${QUESTIONS.length}`;
+      questionCount.setAttribute("aria-label", `第 ${currentQuestion + 1} 題，共 ${QUESTIONS.length} 題`);
+      progressTrack.setAttribute("aria-valuenow", String(currentQuestion + 1));
+      progressFill.style.width = `${((currentQuestion + 1) / QUESTIONS.length) * 100}%`;
+      questionNumber.textContent = `${SITE_CONFIG.labels.questionPrefix} ${displayNumber}`;
+      questionTitle.innerHTML = question.title.join("<br>");
+      questionHint.textContent = question.hint;
+      nextButton.textContent = currentQuestion === QUESTIONS.length - 1 ? SITE_CONFIG.labels.result : SITE_CONFIG.labels.next;
+      nextButton.disabled = selectedAnswers[currentQuestion] === null;
+      previousButton.hidden = currentQuestion === 0;
+
+      answersContainer.innerHTML = question.options.map((option, index) => {
+        const letter = String.fromCharCode(65 + index);
+        const checked = selectedAnswers[currentQuestion] === letter ? " checked" : "";
+        return `
+          <label class="answer-card">
+            <input type="radio" name="current-answer" value="${letter}"${checked}>
+            <span class="answer-letter">${letter}</span>
+            <span class="answer-text">${option}</span>
+          </label>
+        `;
+      }).join("");
+    }
+
+    function goToTop() {
+      window.scrollTo(0, 0);
+    }
+
+    function getResultData(answerSet) {
+      const primaryResult = RESULTS[answerSet[0]];
+
+      return {
+        ...primaryResult,
+        drainReason: DRAINS[answerSet[1]],
+        weeklyAction: ACTIONS[answerSet[2]]
+      };
+    }
+
+    function renderResult() {
+      const result = getResultData(selectedAnswers);
+
+      resultType.textContent = result.type;
+      resultTitle.innerHTML = result.title.join("<br>");
+      resultSummary.textContent = result.summary;
+      resultAnalysis.textContent = result.analysis;
+      resultReminder.textContent = result.reminder;
+      resultDrain.textContent = result.drainReason;
+      resultAction.textContent = result.weeklyAction;
+    }
+
+    renderSiteContent();
+    renderQuestion();
+
+    startButton.addEventListener("click", () => {
+      cover.hidden = true;
+      quizScreen.hidden = false;
+      renderQuestion();
+      goToTop();
+    });
+
+    answersContainer.addEventListener("change", (event) => {
+      if (event.target.matches('input[name="current-answer"]')) {
+        selectedAnswers[currentQuestion] = event.target.value;
+        nextButton.disabled = false;
+      }
+    });
+
+    lineButton.addEventListener("click", (event) => {
+      if (!SITE_CONFIG.lineUrl) {
+        event.preventDefault();
+        window.alert(SITE_CONFIG.labels.lineNotReady);
+      }
+    });
+
+    nextButton.addEventListener("click", () => {
+      if (selectedAnswers[currentQuestion] === null) return;
+
+      if (currentQuestion < QUESTIONS.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        goToTop();
+        return;
+      }
+
+      quizScreen.hidden = true;
+      calculationScreen.hidden = false;
+      goToTop();
+
+      window.setTimeout(() => {
+        calculationScreen.hidden = true;
+        renderResult();
+        resultScreen.hidden = false;
+        goToTop();
+      }, 1000);
+    });
+
+    previousButton.addEventListener("click", () => {
+      if (currentQuestion === 0) return;
+      currentQuestion -= 1;
+      renderQuestion();
+      goToTop();
+    });
+
+    restartButton.addEventListener("click", () => {
+      selectedAnswers.fill(null);
+      currentQuestion = 0;
+      resultScreen.hidden = true;
+      calculationScreen.hidden = true;
+      quizScreen.hidden = true;
+      cover.hidden = false;
+      renderQuestion();
+      goToTop();
+    });
+  </script>
+</body>
+</html>
