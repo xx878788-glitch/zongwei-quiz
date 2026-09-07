@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="三道題目，看看你面對生活壓力時藏著哪一種韌性。舒服哥陪你看見：你其實比想像中更扛得住生活。">
+  <title>你其實比想像中更扛得住生活｜舒服哥</title>
+  <style>
+    :root {
+      --background: #f7f0e5;
+      --primary: #a85f3d;
+      --accent: #6f4937;
+      --text: #382b25;
+      --card: #fffaf3;
+      --muted: #78685f;
+      --shadow: #d8c5b4;
+      --soft: #f1dfce;
+      --font: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--background);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      width: min(70vw, 590px);
+      aspect-ratio: 1;
+      border-radius: 46% 54% 61% 39%;
+      filter: blur(10px);
+      opacity: .42;
+      pointer-events: none;
+      animation: float 15s ease-in-out infinite alternate;
+    }
+    body::before { top: -30vw; left: -24vw; background: #efd1b7; }
+    body::after { right: -28vw; bottom: -32vw; background: #e4c4ad; animation-delay: -7s; }
+    button, a { font: inherit; }
+    button { color: inherit; }
+    .page { width: min(100%, 680px); min-height: 100vh; margin: 0 auto; padding: clamp(24px, 7vw, 52px) 18px 48px; }
+    .screen[hidden] { display: none; }
+    .screen { animation: enter .4s ease both; }
+    .cover { padding-top: clamp(26px, 8vh, 76px); }
+    .label {
+      display: inline-flex;
+      padding: 5px 14px;
+      border: 1px solid #c99a7d;
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(255, 250, 243, .75);
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.3; }
+    h1 { max-width: 620px; margin: 25px 0 15px; font-size: clamp(2.15rem, 9vw, 4rem); letter-spacing: .02em; }
+    .subtitle { margin: 0 0 8px; color: var(--primary); font-size: 1.08rem; font-weight: 800; }
+    .supporting { margin: 0 0 26px; color: var(--muted); }
+    .card {
+      margin: 24px 5px 30px;
+      padding: 22px;
+      border: 1px solid #dec8b7;
+      border-radius: 22px;
+      background: rgba(255, 250, 243, .92);
+      box-shadow: 7px 7px 0 var(--shadow);
+    }
+    .card strong { color: var(--primary); font-size: 1.25rem; }
+    .card p { margin: 7px 0 0; }
+    .primary, .cta-link {
+      display: block;
+      width: calc(100% - 10px);
+      margin-left: 5px;
+      padding: 15px 18px;
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      color: #fffaf3;
+      background: var(--primary);
+      box-shadow: 6px 6px 0 var(--shadow);
+      text-align: center;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: .07em;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+    .primary:hover, .cta-link:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0 var(--shadow); }
+    .primary:focus-visible, .cta-link:focus-visible, .option:focus-visible, .back:focus-visible, .restart:focus-visible { outline: 3px solid #bd7652; outline-offset: 3px; }
+    .primary:disabled { opacity: .42; cursor: not-allowed; transform: none; }
+    .duration { margin: 13px 0 0; color: var(--muted); text-align: center; font-size: .875rem; }
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--primary); font-size: .875rem; font-weight: 800; letter-spacing: .08em; }
+    .progress { height: 9px; margin: 13px 0 34px; overflow: hidden; border: 1px solid #dec8b7; border-radius: 999px; background: #eadbcf; }
+    .progress-fill { width: 33.333%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), #d69b74); transition: width .32s ease; }
+    .question-number { margin: 0 0 10px; color: var(--primary); font-size: .85rem; font-weight: 800; letter-spacing: .17em; }
+    .question-title { font-size: clamp(1.7rem, 7vw, 2.6rem); }
+    .question-hint { margin: 10px 0 23px; color: var(--muted); }
+    .options { display: grid; gap: 13px; margin: 0; padding: 0; border: 0; }
+    .option {
+      display: flex;
+      width: 100%;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      overflow-wrap: anywhere;
+      border: 1px solid #dec8b7;
+      border-radius: 15px;
+      color: var(--text);
+      background: rgba(255, 250, 243, .9);
+      text-align: left;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .option:hover { border-color: var(--primary); transform: translateY(-1px); }
+    .option.selected { border-color: var(--primary); background: var(--soft); }
+    .option-letter { display: grid; flex: 0 0 32px; height: 32px; place-items: center; border: 1px solid var(--primary); border-radius: 50%; color: var(--primary); font-weight: 800; }
+    .option.selected .option-letter { color: #fffaf3; background: var(--primary); }
+    .controls { margin-top: 26px; }
+    .back, .restart { display: block; margin: 20px auto 0; padding: 9px 18px; border: 1px solid transparent; color: var(--muted); background: transparent; text-decoration: underline; text-underline-offset: 5px; cursor: pointer; }
+    .back[hidden] { display: none; }
+    .loading { padding-top: 25vh; text-align: center; }
+    .spinner { width: 70px; height: 70px; margin: 0 auto 24px; border: 4px solid #eadbcf; border-top-color: var(--primary); border-radius: 50%; animation: spin .85s linear infinite; }
+    .loading p { color: var(--muted); letter-spacing: .08em; }
+    .result-kicker { margin: 0; color: var(--primary); font-size: .85rem; font-weight: 800; letter-spacing: .16em; }
+    .result-title { margin: 9px 0 12px; color: var(--primary); font-size: clamp(2rem, 9vw, 3.5rem); }
+    .result-summary { margin: 0 0 22px; font-size: 1.06rem; }
+    .result .card { margin-top: 16px; margin-bottom: 20px; }
+    .result .card h3 { margin-bottom: 7px; color: var(--primary); font-size: 1.05rem; }
+    .cta { margin: 28px 5px; padding: 23px; border: 1px solid #c99a7d; border-radius: 22px; background: linear-gradient(135deg, #efd8c6, var(--card)); box-shadow: 7px 7px 0 var(--shadow); }
+    .cta h3 { color: var(--accent); font-size: 1.35rem; }
+    .cta p { margin: 7px 0 18px; }
+    .cta-link { width: 100%; margin: 0; color: #fffaf3; background: var(--primary); }
+    .restart { border-color: #c99a7d; border-radius: 999px; text-decoration: none; }
+    .disclaimer { margin: 25px auto 0; color: var(--muted); text-align: center; font-size: .8rem; }
+    @keyframes enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes float { from { transform: translate3d(-2vw, -1vh, 0) scale(.94); } to { transform: translate3d(5vw, 6vh, 0) scale(1.08); } }
+    @media (min-width: 681px) {
+      body { padding: 28px 0; }
+      .page { min-height: calc(100vh - 56px); border: 1px solid #e1d0c2; border-radius: 30px; box-shadow: 0 22px 70px rgba(97, 65, 49, .16); }
+    }
+    @media (max-width: 380px) {
+      .page { padding-right: 14px; padding-left: 14px; }
+      h1 { font-size: 2rem; }
+      .option { padding: 14px 12px; }
+      .card, .cta { margin-right: 5px; margin-left: 3px; padding: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="screen cover" id="cover" aria-labelledby="hero-title">
+      <p class="label" id="category-label"></p>
+      <h1 id="hero-title"></h1>
+      <p class="subtitle" id="hero-subtitle"></p>
+      <p class="supporting" id="hero-supporting"></p>
+      <article class="card"><strong id="intro-title"></strong><p id="intro-text"></p></article>
+      <button class="primary" id="start-button" type="button"></button>
+      <p class="duration" id="duration"></p>
+    </section>
+    <section class="screen" id="quiz-screen" aria-labelledby="question-title" hidden>
+      <header class="quiz-header"><span id="quiz-label"></span><strong id="question-count" aria-live="polite"></strong></header>
+      <div class="progress" id="progress" role="progressbar" aria-label="測驗進度" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><div class="progress-fill" id="progress-fill"></div></div>
+      <p class="question-number" id="question-number"></p>
+      <h2 class="question-title" id="question-title"></h2>
+      <p class="question-hint" id="question-hint"></p>
+      <fieldset class="options" id="options" aria-label="答案選項"></fieldset>
+      <div class="controls"><button class="primary" id="next-button" type="button" disabled></button><button class="back" id="back-button" type="button" hidden></button></div>
+    </section>
+    <section class="screen loading" id="loading-screen" aria-live="polite" hidden><div class="spinner" aria-hidden="true"></div><p id="loading-text"></p></section>
+    <section class="screen result" id="result-screen" aria-labelledby="result-title" hidden>
+      <p class="result-kicker" id="result-kicker"></p>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-summary" id="result-summary"></p>
+      <article class="card"><h3 id="analysis-label"></h3><p id="result-analysis"></p></article>
+      <article class="card"><h3 id="detail-label"></h3><p id="result-detail"></p></article>
+      <article class="card"><h3 id="action-label"></h3><p id="result-action"></p></article>
+      <aside class="cta"><h3 id="cta-title"></h3><p id="cta-description"></p><a class="cta-link" id="cta-button" target="_blank" rel="noopener noreferrer"></a></aside>
+      <button class="restart" id="restart-button" type="button"></button>
+      <p class="disclaimer" id="disclaimer"></p>
+    </section>
+  </main>
+  <script>
+    const SITE_CONFIG = {
+      ipName: "舒服哥",
+      pageTitle: "你其實比想像中更扛得住生活｜舒服哥",
+      description: "三道題目，看看你面對生活壓力時藏著哪一種韌性。舒服哥陪你看見：你其實比想像中更扛得住生活。",
+      categoryLabel: "生活韌性 · 暖心測驗",
+      heroTitle: "你其實比想像中更扛得住生活",
+      heroSubtitle: "不是你不累，是你一路都沒有放棄",
+      introTitle: "嗨，我是舒服哥",
+      introText: "生活有時候真的很重，但你能走到這裡，已經證明自己比想像中更有力量。用三道題目，看看你身上藏著哪一種撐過難關的韌性。",
+      startButtonText: "看看我的生活韌性",
+      ctaTitle: "生活遇到難關，不必一個人硬撐",
+      ctaDescription: "需要有人聊聊，或想了解合適的資金周轉方式，都歡迎聯絡舒服哥。我們會先了解你的實際情況，再一起找方向。",
+      ctaButtonText: "加入舒服哥官方 LINE",
+      ctaUrl: "https://line.me/R/ti/p/@115leupn",
+      disclaimer: "本測驗僅供自我探索，不構成財務或借貸建議。借款前請衡量實際需求、費用與還款能力，審慎評估。"
+    };
+    const THEME_CONFIG = {
+      backgroundColor: "#f7f0e5",
+      primaryColor: "#a85f3d",
+      accentColor: "#6f4937",
+      textColor: "#382b25",
+      cardColor: "#fffaf3",
+      fontStyle: '"Microsoft JhengHei", "PingFang TC", sans-serif',
+      visualStyle: "warm-personal-brand"
+    };
+    const QUESTIONS = [
+      {
+        label: "QUESTION 01",
+        title: "當生活突然把難題一起丟過來，你通常怎麼撐住？",
+        hint: "沒有標準答案，選最像你平常反應的那一個。",
+        options: {
+          A: "先安靜下來，把今天能做的事情一件件完成",
+          B: "立刻整理問題，想辦法找到最實際的解法",
+          C: "先照顧身邊的人，自己的情緒晚一點再處理",
+          D: "就算跌倒也會重新站起來，換條路繼續走"
+        }
+      },
+      {
+        label: "QUESTION 02",
+        title: "最近最讓你喘不過氣的，通常是哪一種壓力？",
+        hint: "這一題會讓你的結果更貼近目前的處境。",
+        options: {
+          A: "責任太多，每件事都像只能靠我處理",
+          B: "金錢與現實開銷，心裡一直在計算下一步",
+          C: "關係與期待，總怕讓重要的人失望",
+          D: "方向不明，明明很努力卻看不到出口"
+        }
+      },
+      {
+        label: "QUESTION 03",
+        title: "如果現在可以少扛一點，你最願意先做什麼？",
+        hint: "選一個此刻真的做得到的小行動。",
+        options: {
+          A: "把最急的事情寫下來，今天只處理第一件",
+          B: "找可信任的人談談，不再自己猜所有答案",
+          C: "留一段時間休息，允許自己暫時不逞強",
+          D: "重新盤點資源，主動了解有哪些可行協助"
+        }
+      }
+    ];
+    const RESULTS = {
+      A: {
+        title: "安靜撐住型",
+        summary: "你不是沒有壓力，只是很會把混亂收進心裡，再一步一步往前走。",
+        analysis: "你的力量來自穩定。別人可能只看到你沒喊累，卻沒看見你每天都在重新安排情緒、責任與生活。能把日子過下去，本身就是一種很扎實的勇敢。只是穩定不等於什麼都要自己承受，適時說出需要，並不會讓你變脆弱。"
+      },
+      B: {
+        title: "務實解題型",
+        summary: "壓力一來，你會先找方法。你的冷靜，曾經帶你穿過不少難關。",
+        analysis: "你習慣把焦慮變成清單，把問題拆成可以處理的步驟。這份務實讓你在混亂中仍保有行動力，也常成為別人信任的依靠。但不是每件事都能立刻解完；當答案還沒出現時，先讓自己喘口氣，也是一種成熟的處理方式。"
+      },
+      C: {
+        title: "溫柔守護型",
+        summary: "你扛住生活的方式，是把重要的人放在心上；你的溫柔比自己知道的更有力量。",
+        analysis: "你很能感受到別人的需要，也願意在辛苦的時候多撐一下。這份體貼讓身邊的人感到安心，可是你自己的疲憊也值得被看見。真正長久的照顧，不是把自己排在最後，而是讓付出與被支持同時存在。"
+      },
+      D: {
+        title: "重新出發型",
+        summary: "你不怕人生改道。即使曾經失去節奏，你還是會找一條新的路再出發。",
+        analysis: "你的韌性不在於從不跌倒，而在於每次都能慢慢找回方向。你知道過去不能重來，卻願意調整方法、重整資源。現在看不清終點沒有關係，只要先決定下一小步，你就在離開原地。"
+      }
+    };
+    const DETAILS = {
+      A: "你現在最需要的不是再撐久一點，而是分清楚哪些責任真的屬於你。把事情分成『現在要做、可以等、可以請人幫忙』，心裡會多出一點空間。",
+      B: "金錢壓力會讓人一直想著最壞的情況。先把必要支出、現有資源和還款能力列清楚，再評估選項；看見具體數字，通常比一個人反覆擔心更有幫助。",
+      C: "你在意別人的感受，但不需要用委屈自己來證明重視。試著把『我現在也有點累』說出口，真正關心你的人，會願意和你一起分擔。",
+      D: "看不到出口時，不代表沒有路，可能只是一次想得太遠。先鎖定未來七天能完成的一件事，讓小小的進展重新帶回掌控感。"
+    };
+    const ACTIONS = {
+      A: "今天寫下三件最掛心的事，只圈出最急的一件。完成它就好，其餘先允許自己放下。",
+      B: "選一位可信任、能聽你把話說完的人，傳一句：『我最近有點卡住，方便聽我聊十分鐘嗎？』",
+      C: "替自己留出二十分鐘，不處理訊息、不安排任務。休息不是逃避，是讓你有力氣繼續走。",
+      D: "把手上的收入、支出、可用資源與需要補上的缺口列成一頁；若涉及資金需求，先了解條件、成本與還款計畫，再做決定。"
+    };
+    const UI_TEXT = {
+      heroSupporting: "三題完成，不到一分鐘",
+      quizLabel: "舒服哥的生活韌性測驗",
+      next: "下一題",
+      previous: "回上一題",
+      viewResult: "看看我的結果",
+      calculating: "正在整理你一路走來的力量…",
+      resultKicker: "你的生活韌性是",
+      analysisLabel: "舒服哥想對你說",
+      detailLabel: "你現在需要留意的事",
+      actionLabel: "今天可以先做的一小步",
+      restart: "重新測驗"
+    };
+    const ids = [
+      "cover", "quiz-screen", "loading-screen", "result-screen", "category-label", "hero-title", "hero-subtitle", "hero-supporting", "intro-title", "intro-text", "start-button", "duration", "quiz-label", "question-count", "progress", "progress-fill", "question-number", "question-title", "question-hint", "options", "next-button", "back-button", "loading-text", "result-kicker", "result-title", "result-summary", "analysis-label", "result-analysis", "detail-label", "result-detail", "action-label", "result-action", "cta-title", "cta-description", "cta-button", "restart-button", "disclaimer"
+    ];
+    const element = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+    const answers = Array(QUESTIONS.length).fill(null);
+    let currentQuestion = 0;
+    function applyTheme() {
+      const root = document.documentElement;
+      root.style.setProperty("--background", THEME_CONFIG.backgroundColor);
+      root.style.setProperty("--primary", THEME_CONFIG.primaryColor);
+      root.style.setProperty("--accent", THEME_CONFIG.accentColor);
+      root.style.setProperty("--text", THEME_CONFIG.textColor);
+      root.style.setProperty("--card", THEME_CONFIG.cardColor);
+      root.style.setProperty("--font", THEME_CONFIG.fontStyle);
+      document.body.dataset.visualStyle = THEME_CONFIG.visualStyle;
+    }
+    function renderSite() {
+      document.title = SITE_CONFIG.pageTitle;
+      document.querySelector('meta[name="description"]').content = SITE_CONFIG.description;
+      element["category-label"].textContent = SITE_CONFIG.categoryLabel;
+      element["hero-title"].textContent = SITE_CONFIG.heroTitle;
+      element["hero-subtitle"].textContent = SITE_CONFIG.heroSubtitle;
+      element["hero-supporting"].textContent = UI_TEXT.heroSupporting;
+      element["intro-title"].textContent = SITE_CONFIG.introTitle;
+      element["intro-text"].textContent = SITE_CONFIG.introText;
+      element["start-button"].textContent = SITE_CONFIG.startButtonText;
+      element.duration.textContent = UI_TEXT.heroSupporting;
+      element["quiz-label"].textContent = UI_TEXT.quizLabel;
+      element["back-button"].textContent = UI_TEXT.previous;
+      element["loading-text"].textContent = UI_TEXT.calculating;
+      element["result-kicker"].textContent = UI_TEXT.resultKicker;
+      element["analysis-label"].textContent = UI_TEXT.analysisLabel;
+      element["detail-label"].textContent = UI_TEXT.detailLabel;
+      element["action-label"].textContent = UI_TEXT.actionLabel;
+      element["cta-title"].textContent = SITE_CONFIG.ctaTitle;
+      element["cta-description"].textContent = SITE_CONFIG.ctaDescription;
+      element["cta-button"].textContent = SITE_CONFIG.ctaButtonText;
+      element["cta-button"].href = SITE_CONFIG.ctaUrl;
+      element["restart-button"].textContent = UI_TEXT.restart;
+      element.disclaimer.textContent = SITE_CONFIG.disclaimer;
+    }
+    function showScreen(screen) {
+      [element.cover, element["quiz-screen"], element["loading-screen"], element["result-screen"]].forEach(item => { item.hidden = item !== screen; });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    function renderQuestion() {
+      const question = QUESTIONS[currentQuestion];
+      element["question-count"].textContent = `${currentQuestion + 1} / ${QUESTIONS.length}`;
+      element.progress.setAttribute("aria-valuenow", String(currentQuestion + 1));
+      element["progress-fill"].style.width = `${((currentQuestion + 1) / QUESTIONS.length) * 100}%`;
+      element["question-number"].textContent = question.label;
+      element["question-title"].textContent = question.title;
+      element["question-hint"].textContent = question.hint;
+      element.options.replaceChildren(...Object.entries(question.options).map(([letter, text]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `option${answers[currentQuestion] === letter ? " selected" : ""}`;
+        button.setAttribute("aria-pressed", String(answers[currentQuestion] === letter));
+        const badge = document.createElement("span");
+        badge.className = "option-letter";
+        badge.textContent = letter;
+        const copy = document.createElement("span");
+        copy.textContent = text;
+        button.append(badge, copy);
+        button.addEventListener("click", () => selectAnswer(letter));
+        return button;
+      }));
+      element["next-button"].textContent = currentQuestion === QUESTIONS.length - 1 ? UI_TEXT.viewResult : UI_TEXT.next;
+      element["next-button"].disabled = answers[currentQuestion] === null;
+      element["back-button"].hidden = currentQuestion === 0;
+    }
+    function selectAnswer(letter) { answers[currentQuestion] = letter; renderQuestion(); }
+    function renderResult() {
+      const result = RESULTS[answers[0]];
+      element["result-title"].textContent = result.title;
+      element["result-summary"].textContent = result.summary;
+      element["result-analysis"].textContent = result.analysis;
+      element["result-detail"].textContent = DETAILS[answers[1]];
+      element["result-action"].textContent = ACTIONS[answers[2]];
+      showScreen(element["result-screen"]);
+    }
+    function nextQuestion() {
+      if (answers[currentQuestion] === null) return;
+      if (currentQuestion < QUESTIONS.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        showScreen(element["quiz-screen"]);
+        return;
+      }
+      showScreen(element["loading-screen"]);
+      window.setTimeout(renderResult, 1000);
+    }
+    function previousQuestion() {
+      if (currentQuestion === 0) return;
+      currentQuestion -= 1;
+      renderQuestion();
+      showScreen(element["quiz-screen"]);
+    }
+    function restartQuiz() {
+      answers.fill(null);
+      currentQuestion = 0;
+      renderQuestion();
+      showScreen(element.cover);
+    }
+    element["start-button"].addEventListener("click", () => { currentQuestion = 0; renderQuestion(); showScreen(element["quiz-screen"]); });
+    element["next-button"].addEventListener("click", nextQuestion);
+    element["back-button"].addEventListener("click", previousQuestion);
+    element["restart-button"].addEventListener("click", restartQuiz);
+    applyTheme();
+    renderSite();
+    renderQuestion();
+  </script>
+</body>
+</html>
