@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="三道題目，看懂你害怕沒錢的真正原因：安全感、掌控感、責任壓力，還是選擇自由。">
+  <title>你真正怕的不是沒錢，而是失去什麼？｜舒服哥</title>
+  <style>
+    :root {
+      --background: #f3e8d8;
+      --primary: #9a5c42;
+      --accent: #6f3f2f;
+      --text: #33231c;
+      --card: #fffaf2;
+      --muted: #775f53;
+      --shadow: #d5bda8;
+      --font: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--background);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      width: min(72vw, 620px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(20px);
+      opacity: .2;
+      pointer-events: none;
+      animation: float 14s ease-in-out infinite alternate;
+    }
+
+    body::before { top: -28vw; left: -24vw; background: var(--primary); }
+    body::after { right: -25vw; bottom: -30vw; background: var(--accent); animation-delay: -6s; }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+    .page { width: min(100%, 680px); min-height: 100vh; margin: 0 auto; padding: clamp(24px, 7vw, 52px) 18px 48px; }
+    .screen[hidden] { display: none; }
+    .screen { animation: enter .4s ease both; }
+    .cover { padding-top: clamp(24px, 8vh, 80px); }
+
+    .label {
+      display: inline-flex;
+      padding: 5px 13px;
+      border: 1px solid color-mix(in srgb, var(--accent) 64%, transparent);
+      border-radius: 999px;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--background) 75%, transparent);
+      font-size: .85rem;
+      letter-spacing: .12em;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.3; }
+    h1 { max-width: 620px; margin: 24px 0 15px; font-size: clamp(2.15rem, 9vw, 4rem); letter-spacing: .025em; }
+    .subtitle { margin: 0 0 8px; color: var(--accent); font-size: 1.05rem; font-weight: 700; }
+    .supporting { margin: 0 0 26px; color: var(--muted); }
+
+    .card {
+      margin: 24px 5px 30px;
+      padding: 22px;
+      border: 1px solid color-mix(in srgb, var(--accent) 58%, transparent);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--card) 94%, transparent);
+      box-shadow: 7px 7px 0 var(--shadow);
+    }
+
+    .card strong { color: var(--accent); font-size: 1.25rem; }
+    .card p { margin: 7px 0 0; }
+    .primary, .cta-link {
+      display: block;
+      width: calc(100% - 10px);
+      margin-left: 5px;
+      padding: 15px 18px;
+      border: 1px solid var(--accent);
+      border-radius: 13px;
+      color: var(--text);
+      background: var(--primary);
+      box-shadow: 6px 6px 0 var(--shadow);
+      text-align: center;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: .08em;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .primary:hover, .cta-link:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0 var(--shadow); }
+    .primary:focus-visible, .cta-link:focus-visible, .option:focus-visible, .back:focus-visible, .restart:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .primary:disabled { opacity: .42; cursor: not-allowed; transform: none; box-shadow: 6px 6px 0 var(--shadow); }
+    .duration { margin: 13px 0 0; color: var(--muted); text-align: center; font-size: .875rem; }
+
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--accent); font-size: .875rem; letter-spacing: .08em; }
+    .progress { height: 8px; margin: 13px 0 34px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--card) 75%, transparent); }
+    .progress-fill { width: 33.333%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width .32s ease; }
+    .question-number { margin: 0 0 10px; color: var(--accent); font-size: .85rem; font-weight: 700; letter-spacing: .17em; }
+    .question-title { font-size: clamp(1.7rem, 7vw, 2.6rem); }
+    .question-hint { margin: 10px 0 23px; color: var(--muted); }
+    .options { display: grid; gap: 13px; margin: 0; padding: 0; border: 0; }
+
+    .option {
+      display: flex;
+      width: 100%;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      overflow-wrap: anywhere;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      border-radius: 14px;
+      color: var(--text);
+      background: color-mix(in srgb, var(--card) 91%, transparent);
+      text-align: left;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+
+    .option:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .option.selected { border-color: var(--accent); background: color-mix(in srgb, var(--primary) 72%, var(--card)); }
+    .option-letter { display: grid; flex: 0 0 32px; height: 32px; place-items: center; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent); font-weight: 800; }
+    .option.selected .option-letter { color: var(--background); background: var(--accent); }
+    .controls { margin-top: 26px; }
+    .back, .restart { display: block; margin: 20px auto 0; padding: 9px 18px; border: 1px solid transparent; color: var(--muted); background: transparent; text-decoration: underline; text-underline-offset: 5px; cursor: pointer; }
+    .back[hidden] { display: none; }
+
+    .loading { padding-top: 25vh; text-align: center; }
+    .spinner { width: 70px; height: 70px; margin: 0 auto 24px; border: 4px solid color-mix(in srgb, var(--accent) 22%, transparent); border-top-color: var(--accent); border-radius: 50%; animation: spin .85s linear infinite; }
+    .loading p { color: var(--muted); letter-spacing: .08em; }
+    .result-kicker { margin: 0; color: var(--accent); font-size: .85rem; letter-spacing: .16em; }
+    .result-title { margin: 9px 0 12px; color: var(--accent); font-size: clamp(2rem, 9vw, 3.5rem); }
+    .result-summary { margin: 0 0 22px; font-size: 1.06rem; }
+    .result .card { margin-top: 16px; margin-bottom: 20px; }
+    .result .card h3 { margin-bottom: 7px; color: var(--accent); font-size: 1.05rem; }
+    .result .card p { color: var(--text); }
+    .cta { margin: 28px 5px; padding: 23px; border: 1px solid var(--accent); border-radius: 18px; background: linear-gradient(135deg, var(--primary), var(--card)); box-shadow: 7px 7px 0 var(--shadow); }
+    .cta h3 { color: var(--accent); font-size: 1.35rem; }
+    .cta p { margin: 7px 0 18px; }
+    .cta-link { width: 100%; margin: 0; color: var(--background); background: var(--accent); }
+    .cta-link[aria-disabled="true"] { color: var(--muted); background: var(--card); cursor: default; opacity: .78; }
+    .restart { border-color: color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 999px; text-decoration: none; }
+    .disclaimer { margin: 25px auto 0; color: var(--muted); text-align: center; font-size: .8rem; }
+
+    @keyframes enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes float { from { transform: translate3d(-2vw, -1vh, 0) scale(.94); border-radius: 43% 57% 61% 39%; } to { transform: translate3d(5vw, 6vh, 0) scale(1.08); border-radius: 62% 38% 42% 58%; } }
+
+    @media (min-width: 681px) {
+      body { padding: 28px 0; }
+      .page { min-height: calc(100vh - 56px); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); border-radius: 28px; box-shadow: 0 22px 70px rgba(0, 0, 0, .38); }
+    }
+
+    @media (max-width: 380px) {
+      .page { padding-right: 14px; padding-left: 14px; }
+      h1 { font-size: 2rem; }
+      .option { padding: 14px 12px; }
+      .card, .cta { margin-right: 5px; margin-left: 3px; padding: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="screen cover" id="cover" aria-labelledby="hero-title">
+      <p class="label" id="category-label"></p>
+      <h1 id="hero-title"></h1>
+      <p class="subtitle" id="hero-subtitle"></p>
+      <p class="supporting" id="hero-supporting"></p>
+      <article class="card">
+        <strong id="intro-title"></strong>
+        <p id="intro-text"></p>
+      </article>
+      <button class="primary" id="start-button" type="button"></button>
+      <p class="duration" id="duration"></p>
+    </section>
+
+    <section class="screen" id="quiz-screen" aria-labelledby="question-title" hidden>
+      <header class="quiz-header">
+        <span id="quiz-label"></span>
+        <strong id="question-count" aria-live="polite"></strong>
+      </header>
+      <div class="progress" id="progress" role="progressbar" aria-label="測驗進度" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <p class="question-number" id="question-number"></p>
+      <h2 class="question-title" id="question-title"></h2>
+      <p class="question-hint" id="question-hint"></p>
+      <fieldset class="options" id="options" aria-label="答案選項"></fieldset>
+      <div class="controls">
+        <button class="primary" id="next-button" type="button" disabled></button>
+        <button class="back" id="back-button" type="button" hidden></button>
+      </div>
+    </section>
+
+    <section class="screen loading" id="loading-screen" aria-live="polite" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="loading-text"></p>
+    </section>
+
+    <section class="screen result" id="result-screen" aria-labelledby="result-title" hidden>
+      <p class="result-kicker" id="result-kicker"></p>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-summary" id="result-summary"></p>
+      <article class="card"><h3 id="analysis-label"></h3><p id="result-analysis"></p></article>
+      <article class="card"><h3 id="detail-label"></h3><p id="result-detail"></p></article>
+      <article class="card"><h3 id="action-label"></h3><p id="result-action"></p></article>
+      <aside class="cta">
+        <h3 id="cta-title"></h3>
+        <p id="cta-description"></p>
+        <a class="cta-link" id="cta-button" target="_blank" rel="noopener noreferrer"></a>
+      </aside>
+      <button class="restart" id="restart-button" type="button"></button>
+      <p class="disclaimer" id="disclaimer"></p>
+    </section>
+  </main>
+
+  <script>
+    /* ================================================================
+       新測驗替換區：建立新測驗時，只需修改下方資料物件。
+       不需要修改後方的畫面渲染與互動程式。
+       ================================================================ */
+
+    // 新測驗替換區：網站名稱、首頁文案與導流資訊。
+    const SITE_CONFIG = {
+      ipName: "舒服哥",
+      pageTitle: "你真正怕的不是沒錢，而是失去什麼？｜舒服哥",
+      description: "三道題目，看懂你害怕沒錢的真正原因：安全感、掌控感、責任壓力，還是選擇自由。",
+      categoryLabel: "生活壓力 · 心理測驗",
+      heroTitle: "你真正怕的不是沒錢，而是失去什麼？",
+      heroSubtitle: "測出藏在金錢焦慮背後，你最在意的那件事",
+      introTitle: "嗨，我是舒服哥",
+      introText: "害怕沒錢，不代表你不夠努力。很多時候，我們怕的是生活突然失控、拖累家人，或連選擇的權利都沒有。用三題，陪你把這份壓力看清楚一點。",
+      startButtonText: "開始測驗",
+      ctaTitle: "最近真的被錢壓得喘不過氣嗎？",
+      ctaDescription: "你不需要一個人亂想。想找人聊聊，或了解適合自己的資金周轉方式，可以加入舒服哥官方LINE；先把需求和還款能力想清楚，再做決定。",
+      ctaButtonText: "加入舒服哥官方LINE",
+      ctaUrl: "https://line.me/R/ti/p/@115leupn",
+      disclaimer: "本測驗僅供自我探索，不構成財務或借貸建議。資金周轉前請衡量實際需求、費用與還款能力；不保證核貸。"
+    };
+
+    // 新測驗替換區：顏色、字體與視覺樣式。
+    const THEME_CONFIG = {
+      backgroundColor: "#f3e8d8",
+      primaryColor: "#9a5c42",
+      accentColor: "#6f3f2f",
+      textColor: "#33231c",
+      cardColor: "#fffaf2",
+      fontStyle: '"Microsoft JhengHei", "PingFang TC", sans-serif',
+      visualStyle: "warm-personal-brand"
+    };
+
+    // 新測驗替換區：固定三題，每題保留 A、B、C、D 四個選項。
+    const QUESTIONS = [
+      {
+        label: "QUESTION 01",
+        title: "如果明天突然少了一筆收入，你第一個擔心的是？",
+        hint: "別選最理性的，選腦中第一個冒出來的答案。",
+        options: {
+          A: "存款撐不了多久，生活會沒有安全感",
+          B: "很多支出無法控制，事情會整個亂掉",
+          C: "家人或身邊的人需要我，我怕自己扛不起來",
+          D: "我會失去選擇，只能繼續做不想做的事"
+        }
+      },
+      {
+        label: "QUESTION 02",
+        title: "當你開始擔心錢時，最常出現哪種反應？",
+        hint: "這一題會補充你的金錢焦慮模式。",
+        options: {
+          A: "一直查看餘額、反覆計算還剩多少",
+          B: "什麼都不敢花，連必要支出也會猶豫",
+          C: "硬撐著多接工作，不太敢跟別人說累",
+          D: "先不看帳單或明細，想讓自己暫時忘掉"
+        }
+      },
+      {
+        label: "QUESTION 03",
+        title: "如果現在只能先做一件事，你最想從哪裡開始？",
+        hint: "選一個你願意真的跨出去的小步驟。",
+        options: {
+          A: "把每月收入、必要支出和缺口列清楚",
+          B: "先存出一筆小額緊急預備金",
+          C: "找可信任的人聊聊，一起整理可行選項",
+          D: "處理最有壓力的一筆支出，不再一直逃避"
+        }
+      }
+    ];
+
+    // 新測驗替換區：第一題 A、B、C、D 對應四種主要結果。
+    const RESULTS = {
+      A: {
+        title: "安全感守門員",
+        summary: "你怕的不是錢變少，而是生活忽然沒有底。",
+        analysis: "對你來說，存款像一層保護。只要數字往下掉，你的大腦就會立刻想到生病、失業或突發狀況。你不是愛錢，而是很怕需要幫助時，手上沒有任何緩衝。真正能讓你安心的，不是逼自己完全不花錢，而是知道最低生活成本、手上的緩衝能撐多久，以及下一步能做什麼。"
+      },
+      B: {
+        title: "掌控感防衛者",
+        summary: "你最怕的，是事情不再照你的安排走。",
+        analysis: "金錢對你而言代表秩序。收入不穩或突然多出一筆支出，會讓你覺得整個生活被打亂，甚至連小額消費都容易自責。你需要的不是把每件事控制到零風險，而是先分清楚：哪些支出可以調整、哪些暫時不能動、哪些只是焦慮替你放大的最壞劇本。"
+      },
+      C: {
+        title: "責任全扛型",
+        summary: "你真正怕的，是自己保護不了重要的人。",
+        analysis: "你常把錢和責任綁在一起。家人的生活、承諾或別人的期待，都可能讓你覺得自己不能倒。於是你再累也先撐著，甚至不敢承認手上有壓力。但負責任不等於所有事都只能自己扛；越早把現況說清楚、排出優先順序，越不容易在壓力最大時做出超出能力的決定。"
+      },
+      D: {
+        title: "自由保衛者",
+        summary: "你害怕的，是沒錢之後連說不的資格都沒有。",
+        analysis: "你在意的其實是選擇權。沒有足夠的錢，可能代表不能離開不喜歡的工作、不能休息，也不能拒絕不合理的安排。這種焦慮容易讓你一邊想逃離，一邊又不敢看現實。先處理最卡住你的那一筆壓力，會比等待一次徹底翻身，更有機會把選擇權慢慢拿回來。"
+      }
+    };
+
+    // 新測驗替換區：第二題 A、B、C、D 對應的個人化內容。
+    const DETAILS = {
+      A: "你的焦慮會透過「反覆確認」出現。查看餘額能短暫安心，但看得越頻繁，注意力越容易被數字綁住。可以改成固定每週檢查一次，並同時記下已經處理好的事情，讓自己看到的不只有缺口。",
+      B: "你的第一反應是把花費全部踩煞車。節制沒有錯，但如果連吃飯、健康或工作必要支出都省掉，壓力反而可能變大。先區分必要、可延後與可取消，別讓每一筆錢都變成罪惡感。",
+      C: "你習慣用更多工作換取安心，也因此最容易忽略自己的負荷。先替時間和體力設一條底線；如果某個缺口必須處理，列出期限與金額，比沒有終點地硬撐更有方向。",
+      D: "你會先把壓力推遠，因為打開帳單像是在面對失敗。這不是懶惰，而是大腦在躲避威脅。先只看一筆、記下一個日期，不要求當下全部解決，會比持續不看更容易重新取得掌控。"
+    };
+
+    // 新測驗替換區：第三題 A、B、C、D 對應的個人化行動。
+    const ACTIONS = {
+      A: "今天花十分鐘列出三個數字：每月可用收入、必要支出、目前缺口。先知道真實狀況，不急著責怪自己。數字清楚後，才能判斷問題是短期周轉，還是需要調整固定支出。",
+      B: "先設定一個小到做得到的安全墊，不必一開始就追求幾個月生活費。固定留下少量、避免隨意挪用，累積的是錢，也是「遇到事情我有準備」的感覺。",
+      C: "找一位不會批判你的人，把現況、期限和你最擔心的事說清楚。若要評估資金周轉，也先比較總費用、期限與還款能力，不要只看眼前能拿到多少。",
+      D: "挑出目前最讓你不敢面對的一筆支出，確認金額、期限與可協調空間。先處理一件最卡的事，不追求一次翻身；當壓力從模糊變具體，你會比較容易找回選擇。"
+    };
+
+    // 通用介面文字通常不需修改；如需換語言，可集中在此調整。
+    const UI_TEXT = {
+      heroSupporting: "三題完成，不到一分鐘",
+      quizLabel: "害怕沒錢心理測驗",
+      next: "下一題",
+      previous: "回上一題",
+      viewResult: "看看我真正害怕什麼",
+      calculating: "正在整理你藏在金錢焦慮後面的在意",
+      resultKicker: "你的金錢焦慮類型",
+      analysisLabel: "你真正害怕的是",
+      detailLabel: "焦慮出現時的你",
+      actionLabel: "現在可以先做的一步",
+      restart: "重新測驗",
+      unsetCta: "導流連結尚未設定"
+    };
+
+    /* ====================== 通用功能區：通常不需修改 ====================== */
+    const ids = [
+      "cover", "quiz-screen", "loading-screen", "result-screen", "category-label",
+      "hero-title", "hero-subtitle", "hero-supporting", "intro-title", "intro-text",
+      "start-button", "duration", "quiz-label", "question-count", "progress",
+      "progress-fill", "question-number", "question-title", "question-hint", "options",
+      "next-button", "back-button", "loading-text", "result-kicker", "result-title",
+      "result-summary", "analysis-label", "result-analysis", "detail-label", "result-detail",
+      "action-label", "result-action", "cta-title", "cta-description", "cta-button",
+      "restart-button", "disclaimer"
+    ];
+    const element = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+    const answers = Array(QUESTIONS.length).fill(null);
+    let currentQuestion = 0;
+
+    function applyTheme() {
+      const root = document.documentElement;
+      root.style.setProperty("--background", THEME_CONFIG.backgroundColor);
+      root.style.setProperty("--primary", THEME_CONFIG.primaryColor);
+      root.style.setProperty("--accent", THEME_CONFIG.accentColor);
+      root.style.setProperty("--text", THEME_CONFIG.textColor);
+      root.style.setProperty("--card", THEME_CONFIG.cardColor);
+      root.style.setProperty("--font", THEME_CONFIG.fontStyle);
+      document.body.dataset.visualStyle = THEME_CONFIG.visualStyle;
+    }
+
+    function renderSite() {
+      document.title = SITE_CONFIG.pageTitle;
+      document.querySelector('meta[name="description"]').content = SITE_CONFIG.description;
+      element["category-label"].textContent = SITE_CONFIG.categoryLabel;
+      element["hero-title"].textContent = SITE_CONFIG.heroTitle;
+      element["hero-subtitle"].textContent = SITE_CONFIG.heroSubtitle;
+      element["hero-supporting"].textContent = UI_TEXT.heroSupporting;
+      element["intro-title"].textContent = SITE_CONFIG.introTitle;
+      element["intro-text"].textContent = SITE_CONFIG.introText;
+      element["start-button"].textContent = SITE_CONFIG.startButtonText;
+      element.duration.textContent = UI_TEXT.heroSupporting;
+      element["quiz-label"].textContent = UI_TEXT.quizLabel;
+      element["back-button"].textContent = UI_TEXT.previous;
+      element["loading-text"].textContent = UI_TEXT.calculating;
+      element["result-kicker"].textContent = UI_TEXT.resultKicker;
+      element["analysis-label"].textContent = UI_TEXT.analysisLabel;
+      element["detail-label"].textContent = UI_TEXT.detailLabel;
+      element["action-label"].textContent = UI_TEXT.actionLabel;
+      element["cta-title"].textContent = SITE_CONFIG.ctaTitle;
+      element["cta-description"].textContent = SITE_CONFIG.ctaDescription;
+      element["restart-button"].textContent = UI_TEXT.restart;
+      element.disclaimer.textContent = SITE_CONFIG.disclaimer;
+      renderCta();
+    }
+
+    function renderCta() {
+      const url = SITE_CONFIG.ctaUrl.trim();
+      if (!url) {
+        element["cta-button"].textContent = UI_TEXT.unsetCta;
+        element["cta-button"].removeAttribute("href");
+        element["cta-button"].setAttribute("aria-disabled", "true");
+        element["cta-button"].setAttribute("role", "button");
+        return;
+      }
+      element["cta-button"].textContent = SITE_CONFIG.ctaButtonText;
+      element["cta-button"].href = url;
+      element["cta-button"].removeAttribute("aria-disabled");
+      element["cta-button"].removeAttribute("role");
+    }
+
+    function showScreen(screen) {
+      [element.cover, element["quiz-screen"], element["loading-screen"], element["result-screen"]]
+        .forEach(item => { item.hidden = item !== screen; });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuestion() {
+      const question = QUESTIONS[currentQuestion];
+      element["question-count"].textContent = `${currentQuestion + 1} / ${QUESTIONS.length}`;
+      element.progress.setAttribute("aria-valuenow", String(currentQuestion + 1));
+      element["progress-fill"].style.width = `${((currentQuestion + 1) / QUESTIONS.length) * 100}%`;
+      element["question-number"].textContent = question.label;
+      element["question-title"].textContent = question.title;
+      element["question-hint"].textContent = question.hint;
+      element.options.replaceChildren(...Object.entries(question.options).map(([letter, text]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `option${answers[currentQuestion] === letter ? " selected" : ""}`;
+        button.setAttribute("aria-pressed", String(answers[currentQuestion] === letter));
+        const badge = document.createElement("span");
+        badge.className = "option-letter";
+        badge.textContent = letter;
+        const copy = document.createElement("span");
+        copy.textContent = text;
+        button.append(badge, copy);
+        button.addEventListener("click", () => selectAnswer(letter));
+        return button;
+      }));
+      element["next-button"].textContent = currentQuestion === QUESTIONS.length - 1 ? UI_TEXT.viewResult : UI_TEXT.next;
+      element["next-button"].disabled = answers[currentQuestion] === null;
+      element["back-button"].hidden = currentQuestion === 0;
+    }
+
+    function selectAnswer(letter) {
+      answers[currentQuestion] = letter;
+      renderQuestion();
+    }
+
+    function renderResult() {
+      const result = RESULTS[answers[0]];
+      element["result-title"].textContent = result.title;
+      element["result-summary"].textContent = result.summary;
+      element["result-analysis"].textContent = result.analysis;
+      element["result-detail"].textContent = DETAILS[answers[1]];
+      element["result-action"].textContent = ACTIONS[answers[2]];
+      showScreen(element["result-screen"]);
+    }
+
+    function nextQuestion() {
+      if (answers[currentQuestion] === null) return;
+      if (currentQuestion < QUESTIONS.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        showScreen(element["quiz-screen"]);
+        return;
+      }
+      showScreen(element["loading-screen"]);
+      window.setTimeout(renderResult, 1000);
+    }
+
+    function previousQuestion() {
+      if (currentQuestion === 0) return;
+      currentQuestion -= 1;
+      renderQuestion();
+      showScreen(element["quiz-screen"]);
+    }
+
+    function restartQuiz() {
+      answers.fill(null);
+      currentQuestion = 0;
+      renderQuestion();
+      showScreen(element.cover);
+    }
+
+    element["start-button"].addEventListener("click", () => {
+      currentQuestion = 0;
+      renderQuestion();
+      showScreen(element["quiz-screen"]);
+    });
+    element["next-button"].addEventListener("click", nextQuestion);
+    element["back-button"].addEventListener("click", previousQuestion);
+    element["restart-button"].addEventListener("click", restartQuiz);
+    element["cta-button"].addEventListener("click", event => {
+      if (!SITE_CONFIG.ctaUrl.trim()) event.preventDefault();
+    });
+
+    applyTheme();
+    renderSite();
+    renderQuestion();
+  </script>
+</body>
+</html>
