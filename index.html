@@ -770,7 +770,7 @@
       <aside class="line-cta">
         <h3 id="line-title"></h3>
         <p id="line-description"></p>
-        <a class="line-button" id="line-button" href="#"></a>
+        <a class="line-button" id="line-button" href="https://line.me/R/ti/p/@685hmdpz" target="_blank" rel="noopener noreferrer"></a>
       </aside>
 
       <button class="restart-button" id="restart-quiz" type="button"></button>
@@ -785,7 +785,7 @@
       pageTitle: "雲林宗瑋｜玩家玄學測驗",
       personaName: "雲林宗瑋",
       lineButtonText: "加入官方LINE了解更多",
-      lineUrl: "",
+      lineUrl: "https://line.me/R/ti/p/@685hmdpz",
       metaDescription: "三題趣味測驗，測出你是哪一派玩家玄學流派，看看玩家之間流傳的迷信與儀式感。",
       introGreeting: "Hi，我是{name}",
       lineDescription: "加入{name}官方LINE\n了解更多娛樂城玩法、活動資訊、玩家經驗與注意事項",
@@ -814,8 +814,7 @@
         resultKicker: "你的玩家玄學流派",
         questionPrefix: "QUESTION",
         restart: "重新測一次",
-        disclaimer: "玄學與迷信僅為娛樂文化分享，不代表任何獲利保證。請量力而為，未滿18歲請勿參與。",
-        lineNotReady: "官方LINE連結尚未設定"
+        disclaimer: "玄學與迷信僅為娛樂文化分享，不代表任何獲利保證。請量力而為，未滿18歲請勿參與。"
       }
     };
 
@@ -963,7 +962,7 @@
       lineTitle.textContent = SITE_CONFIG.labels.lineTitle;
       lineDescription.textContent = SITE_CONFIG.lineDescription.replace("{name}", SITE_CONFIG.personaName);
       lineButton.textContent = SITE_CONFIG.lineButtonText;
-      lineButton.href = SITE_CONFIG.lineUrl || "#";
+      lineButton.href = SITE_CONFIG.lineUrl;
       restartButton.textContent = SITE_CONFIG.labels.restart;
       disclaimer.textContent = SITE_CONFIG.labels.disclaimer;
     }
@@ -1036,13 +1035,6 @@
       if (event.target.matches('input[name="current-answer"]')) {
         selectedAnswers[currentQuestion] = event.target.value;
         nextButton.disabled = false;
-      }
-    });
-
-    lineButton.addEventListener("click", (event) => {
-      if (!SITE_CONFIG.lineUrl) {
-        event.preventDefault();
-        window.alert(SITE_CONFIG.labels.lineNotReady);
       }
     });
 
