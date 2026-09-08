@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="用三道題目快速看看你目前的日常精神、體力與恢復節奏，找到更適合自己的男性保健方向。">
+  <title>你的男人狀態還在線嗎？｜柔柔男性日常保健測驗</title>
+  <style>
+    :root {
+      --background: #fbf7f2;
+      --primary: #8fa58c;
+      --accent: #d98f78;
+      --text: #403936;
+      --card: #fffdf9;
+      --muted: #857a74;
+      --shadow: rgba(92, 73, 63, .10);
+      --line: rgba(137, 118, 108, .18);
+      --soft: #f4ebe4;
+      --soft-green: #edf2eb;
+      --font: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(217,143,120,.10), transparent 30%),
+        radial-gradient(circle at 88% 76%, rgba(143,165,140,.12), transparent 32%),
+        var(--background);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.75;
+      text-align: center;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      filter: blur(4px);
+      opacity: .45;
+      pointer-events: none;
+    }
+    body::before { top: -120px; left: -95px; background: #f2ddd3; }
+    body::after { right: -110px; bottom: -130px; background: #e2eadf; }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+    .page {
+      position: relative;
+      width: min(100%, 680px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(30px, 7vw, 56px) 20px 52px;
+    }
+    .screen[hidden] { display: none; }
+    .screen { animation: enter .38s ease both; text-align: center; }
+    .cover { padding-top: clamp(26px, 8vh, 78px); }
+
+    .mini-illustration {
+      display: grid;
+      width: 108px;
+      height: 108px;
+      margin: 0 auto 18px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: rgba(255,255,255,.62);
+      box-shadow: 0 14px 35px var(--shadow);
+      transform: rotate(-2deg);
+    }
+    .mini-illustration svg { width: 72px; height: 72px; overflow: visible; }
+    .mini-illustration .stroke { fill: none; stroke: var(--primary); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .mini-illustration .accent-stroke { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .mini-illustration .fill-soft { fill: var(--soft); }
+    .mini-illustration .fill-green { fill: var(--soft-green); }
+    .mini-illustration.small { width: 86px; height: 86px; margin-bottom: 20px; border-radius: 28px; transform: rotate(2deg); }
+    .mini-illustration.small svg { width: 58px; height: 58px; }
+
+    .doodle {
+      position: absolute;
+      z-index: -1;
+      color: var(--accent);
+      opacity: .28;
+      pointer-events: none;
+    }
+    .doodle.one { top: 105px; left: 9px; transform: rotate(-12deg); }
+    .doodle.two { top: 300px; right: 2px; color: var(--primary); transform: rotate(12deg); }
+    .doodle svg { width: 42px; height: 42px; }
+
+    .label {
+      display: inline-flex;
+      padding: 7px 14px;
+      border: 1px solid rgba(217,143,120,.28);
+      border-radius: 999px;
+      color: #a96150;
+      background: rgba(255,255,255,.72);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.35; text-align: center; }
+    h1 {
+      max-width: 620px;
+      margin: 22px auto 14px;
+      font-size: clamp(2rem, 8.5vw, 3.65rem);
+      letter-spacing: .01em;
+      font-weight: 800;
+    }
+    .subtitle { max-width: 560px; margin: 0 auto 8px; color: #7d927b; font-size: 1.05rem; font-weight: 700; }
+    .supporting { margin: 0 0 26px; color: var(--muted); }
+
+    .card {
+      margin: 24px auto 30px;
+      padding: 24px 22px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,253,249,.88);
+      box-shadow: 0 16px 40px var(--shadow);
+      text-align: center;
+    }
+    .card strong { color: #a96150; font-size: 1.2rem; }
+    .card p { margin: 8px 0 0; }
+
+    .primary, .cta-link {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 15px 20px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, #8fa58c, #7f987c);
+      box-shadow: 0 12px 26px rgba(105,126,103,.20);
+      text-align: center;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: .05em;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+    .primary:hover, .cta-link:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(105,126,103,.24); }
+    .primary:focus-visible, .cta-link:focus-visible, .option:focus-visible, .back:focus-visible, .restart:focus-visible { outline: 3px solid rgba(217,143,120,.55); outline-offset: 3px; }
+    .primary:disabled { opacity: .42; cursor: not-allowed; transform: none; }
+    .duration { margin: 13px 0 0; color: var(--muted); text-align: center; font-size: .875rem; }
+
+    .quiz-header { display: flex; justify-content: center; align-items: center; gap: 10px; color: #9c7467; font-size: .84rem; letter-spacing: .06em; }
+    .quiz-header span::after { content: " · "; margin-left: 10px; color: #c7b9b1; }
+    .progress { height: 7px; margin: 13px auto 30px; overflow: hidden; border-radius: 999px; background: #ece6e1; }
+    .progress-fill { width: 33.333%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #d98f78, #8fa58c); transition: width .32s ease; }
+    .question-number { margin: 0 0 10px; color: #ad7664; font-size: .8rem; font-weight: 800; letter-spacing: .15em; }
+    .question-title { max-width: 600px; margin: 0 auto; font-size: clamp(1.65rem, 6.7vw, 2.45rem); }
+    .question-hint { max-width: 560px; margin: 10px auto 23px; color: var(--muted); }
+    .options { display: grid; gap: 12px; margin: 0; padding: 0; border: 0; }
+
+    .option {
+      display: flex;
+      width: 100%;
+      min-height: 104px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      padding: 17px 16px;
+      overflow-wrap: anywhere;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      color: var(--text);
+      background: rgba(255,253,249,.82);
+      box-shadow: 0 9px 24px rgba(84,68,59,.05);
+      text-align: center;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .option:hover { border-color: rgba(143,165,140,.65); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(84,68,59,.08); }
+    .option.selected { border-color: #8fa58c; background: #eef3ec; }
+    .option-letter { display: grid; flex: 0 0 31px; width: 31px; height: 31px; place-items: center; border: 1px solid rgba(143,165,140,.7); border-radius: 50%; color: #789174; font-weight: 800; }
+    .option.selected .option-letter { color: #fff; background: #8fa58c; }
+    .option span:last-child { max-width: 510px; }
+    .controls { margin-top: 25px; }
+    .back, .restart { display: block; margin: 18px auto 0; padding: 9px 18px; border: 1px solid transparent; color: var(--muted); background: transparent; text-align: center; text-decoration: underline; text-underline-offset: 5px; cursor: pointer; }
+    .back[hidden] { display: none; }
+
+    .loading { padding-top: 22vh; text-align: center; }
+    .spinner { width: 62px; height: 62px; margin: 0 auto 22px; border: 4px solid #ebe5e0; border-top-color: #d98f78; border-radius: 50%; animation: spin .85s linear infinite; }
+    .loading p { color: var(--muted); letter-spacing: .05em; }
+    .result-kicker { margin: 0; color: #ad7664; font-size: .82rem; font-weight: 800; letter-spacing: .14em; }
+    .result-title { margin: 9px auto 12px; color: #6f866d; font-size: clamp(2rem, 8.5vw, 3.35rem); }
+    .result-summary { max-width: 580px; margin: 0 auto 22px; font-size: 1.06rem; }
+    .result .card { margin-top: 14px; margin-bottom: 16px; }
+    .result .card h3 { margin-bottom: 8px; color: #a96150; font-size: 1.02rem; }
+    .result .card p { color: var(--text); }
+    .cta { margin: 26px auto; padding: 25px 22px; border: 1px solid rgba(217,143,120,.24); border-radius: 26px; background: linear-gradient(145deg, #fff9f4, #f2f6f0); box-shadow: 0 16px 42px var(--shadow); text-align: center; }
+    .cta h3 { color: #9e6553; font-size: 1.28rem; }
+    .cta p { margin: 8px 0 18px; }
+    .cta-link { color: #fff; background: linear-gradient(135deg, #d98f78, #cc7d68); box-shadow: 0 12px 26px rgba(190,114,95,.20); }
+    .cta-link[aria-disabled="true"] { color: #8f8179; background: #eee7e2; cursor: default; opacity: .9; box-shadow: none; }
+    .restart { border-color: rgba(143,165,140,.32); border-radius: 999px; text-decoration: none; }
+    .disclaimer { max-width: 600px; margin: 24px auto 0; color: var(--muted); text-align: center; font-size: .79rem; }
+
+    @keyframes enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (min-width: 681px) {
+      body { padding: 28px 0; }
+      .page { min-height: calc(100vh - 56px); border: 1px solid rgba(137,118,108,.12); border-radius: 34px; background: rgba(255,255,255,.26); box-shadow: 0 24px 70px rgba(84,68,59,.08); }
+    }
+    @media (max-width: 420px) {
+      .page { padding-right: 16px; padding-left: 16px; }
+      h1 { font-size: 2rem; }
+      .mini-illustration { width: 96px; height: 96px; border-radius: 30px; }
+      .option { min-height: 98px; padding: 15px 13px; }
+      .card, .cta { padding: 20px 17px; }
+      .doodle { opacity: .18; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <span class="doodle one" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7v8M24 33v8M7 24h8M33 24h8M12 12l6 6M30 30l6 6M36 12l-6 6M18 30l-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <span class="doodle two" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M13 33c9-1 16-8 18-20 7 7 5 18-3 23-6 4-13 2-15-3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 34c5-5 9-9 16-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <section class="screen cover" id="cover" aria-labelledby="hero-title">
+      <div class="mini-illustration" aria-hidden="true">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="28" class="fill-soft"/>
+          <path class="stroke" d="M24 47c10 1 19-6 22-19 9 7 8 20-1 27-8 6-18 2-21-8Z"/>
+          <path class="stroke" d="M25 49c7-7 12-12 22-18"/>
+          <path class="accent-stroke" d="M51 18l2.5 6.5L60 27l-6.5 2.5L51 36l-2.5-6.5L42 27l6.5-2.5L51 18Z"/>
+        </svg>
+      </div>
+      <p class="label" id="category-label"></p>
+      <h1 id="hero-title"></h1>
+      <p class="subtitle" id="hero-subtitle"></p>
+      <p class="supporting" id="hero-supporting"></p>
+      <article class="card">
+        <strong id="intro-title"></strong>
+        <p id="intro-text"></p>
+      </article>
+      <button class="primary" id="start-button" type="button"></button>
+      <p class="duration" id="duration"></p>
+    </section>
+
+    <section class="screen" id="quiz-screen" aria-labelledby="question-title" hidden>
+      <div class="mini-illustration small" aria-hidden="true">
+        <svg viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="23" class="fill-green"/>
+          <path class="accent-stroke" d="M18 34h9l4-10 6 19 4-9h6"/>
+          <path class="stroke" d="M19 22c4-7 12-10 20-7 8 3 12 11 10 19"/>
+        </svg>
+      </div>
+      <header class="quiz-header">
+        <span id="quiz-label"></span>
+        <strong id="question-count" aria-live="polite"></strong>
+      </header>
+      <div class="progress" id="progress" role="progressbar" aria-label="測驗進度" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <p class="question-number" id="question-number"></p>
+      <h2 class="question-title" id="question-title"></h2>
+      <p class="question-hint" id="question-hint"></p>
+      <fieldset class="options" id="options" aria-label="答案選項"></fieldset>
+      <div class="controls">
+        <button class="primary" id="next-button" type="button" disabled></button>
+        <button class="back" id="back-button" type="button" hidden></button>
+      </div>
+    </section>
+
+    <section class="screen loading" id="loading-screen" aria-live="polite" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="loading-text"></p>
+    </section>
+
+    <section class="screen result" id="result-screen" aria-labelledby="result-title" hidden>
+      <div class="mini-illustration" aria-hidden="true">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="28" class="fill-green"/>
+          <path class="stroke" d="M40 56S23 47 23 35c0-6 4-10 10-10 4 0 6 2 7 5 2-3 4-5 8-5 6 0 10 4 10 10 0 12-18 21-18 21Z"/>
+          <path class="accent-stroke" d="M26 41h8l3-7 5 13 4-8h8"/>
+        </svg>
+      </div>
+      <p class="result-kicker" id="result-kicker"></p>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-summary" id="result-summary"></p>
+      <article class="card"><h3 id="analysis-label"></h3><p id="result-analysis"></p></article>
+      <article class="card"><h3 id="detail-label"></h3><p id="result-detail"></p></article>
+      <article class="card"><h3 id="action-label"></h3><p id="result-action"></p></article>
+      <aside class="cta">
+        <h3 id="cta-title"></h3>
+        <p id="cta-description"></p>
+        <a class="cta-link" id="cta-button" target="_blank" rel="noopener noreferrer"></a>
+      </aside>
+      <button class="restart" id="restart-button" type="button"></button>
+      <p class="disclaimer" id="disclaimer"></p>
+    </section>
+  </main>
+
+  <script>
+    /* ================================================================
+       新測驗替換區：建立新測驗時，只需修改下方資料物件。
+       不需要修改後方的畫面渲染與互動程式。
+       ================================================================ */
+
+    // 新測驗替換區：網站名稱、首頁文案與導流資訊。
+    const SITE_CONFIG = {
+      ipName: "柔柔",
+      pageTitle: "你的男人狀態還在線嗎？｜柔柔男性日常保健測驗",
+      description: "用三道題目快速看看你目前的日常精神、體力與恢復節奏，找到更適合自己的男性保健方向。",
+      categoryLabel: "男性保健 · 互動測驗",
+      heroTitle: "你的男人狀態，最近還在線嗎？",
+      heroSubtitle: "3 題快速看懂你的精神、體力與恢復節奏",
+      introTitle: "Hi，我是柔柔",
+      introText: "別等到每天都覺得累才開始管自己。這份測驗不講艱深術語，用三個日常問題，看看你現在最需要補強的是作息、恢復，還是保養習慣。",
+      startButtonText: "開始測驗",
+      ctaTitle: "想把日常保養再往前一步？",
+      ctaDescription: "如果你正在找男性日常保健的補充選擇，可以點進去看看柔柔整理的瑪卡保健方案。先看清楚成分與使用方式，再決定適不適合自己。",
+      ctaButtonText: "點擊連結，立即選購瑪卡保健方案",
+      ctaUrl: "",
+      disclaimer: "本測驗僅供日常保健與自我整理參考，不是醫療或疾病診斷。保健食品不能取代均衡飲食、睡眠、運動或專業醫療建議。"
+    };
+
+    // 新測驗替換區：顏色、字體與視覺樣式。
+    const THEME_CONFIG = {
+      backgroundColor: "#fbf7f2",
+      primaryColor: "#8fa58c",
+      accentColor: "#d98f78",
+      textColor: "#403936",
+      cardColor: "#fffdf9",
+      fontStyle: '"Microsoft JhengHei", "PingFang TC", sans-serif',
+      visualStyle: "soft-lifestyle"
+    };
+
+    // 新測驗替換區：固定三題，每題保留 A、B、C、D 四個選項。
+    const QUESTIONS = [
+      {
+        label: "QUESTION 01",
+        title: "最近的你，最常出現哪種狀態？",
+        hint: "不要想太久，選最像你最近一兩週的狀態。",
+        options: {
+          A: "上午還行，但一到下午就明顯掉電",
+          B: "工作一忙就靠咖啡或硬撐，休息時才回魂",
+          C: "體力不算差，但運動、熬夜或應酬後恢復比以前慢",
+          D: "目前狀態算穩，只是想提早把男性保養做好"
+        }
+      },
+      {
+        label: "QUESTION 02",
+        title: "你覺得現在最拖累狀態的是哪一件事？",
+        hint: "這題會決定你的個人化補充提醒。",
+        options: {
+          A: "睡眠時間不固定，常常晚睡或睡不飽",
+          B: "工作壓力大，腦袋一直停不下來",
+          C: "久坐、少運動，身體常有一種沒開機的感覺",
+          D: "外食、應酬多，飲食和保養都很隨緣"
+        }
+      },
+      {
+        label: "QUESTION 03",
+        title: "如果只能先做一件事，你最願意從哪裡開始？",
+        hint: "選一個你真的做得到的，不用選最完美的。",
+        options: {
+          A: "先把睡眠和固定休息時間拉回來",
+          B: "每週安排幾次運動，讓身體重新動起來",
+          C: "先調整飲食、喝水和應酬頻率",
+          D: "在基本生活習慣之外，再了解男性保健補充品"
+        }
+      }
+    ];
+
+    // 新測驗替換區：第一題 A、B、C、D 對應四種主要結果。
+    const RESULTS = {
+      A: {
+        title: "午後掉電型",
+        summary: "你的問題不是完全沒體力，而是每天的能量很容易前高後低。",
+        analysis: "你白天可能還能正常工作，但到了下午或晚上就開始明顯疲倦。這種狀態常和睡眠不足、吃飯節奏、久坐，以及長時間專注有關。先別急著把所有問題都歸到年紀，最值得處理的是每天固定出現的掉電時段。"
+      },
+      B: {
+        title: "硬撐透支型",
+        summary: "你很會撐，但真正缺的可能不是意志力，而是恢復時間。",
+        analysis: "忙起來時你習慣先把事情做完，累了再說。短期很有效，但如果長期靠咖啡、熬夜或週末補眠撐住，精神和體力就容易忽高忽低。你的保養重點不是再逼自己更有衝勁，而是把恢復變成固定行程。"
+      },
+      C: {
+        title: "恢復變慢型",
+        summary: "你還有底子，只是身體從消耗回到正常的速度沒有以前快。",
+        analysis: "你平常不一定覺得自己很虛，但只要遇到熬夜、運動、應酬或連續忙幾天，就會明顯感受到恢復時間拉長。這代表你更需要重視睡眠、活動量、飲食與休息的整體節奏，而不是只在很累的時候臨時補救。"
+      },
+      D: {
+        title: "穩定保養型",
+        summary: "你目前沒有太強烈的掉電感，比較像是想提早把狀態維持住。",
+        analysis: "你對自己的身體狀態算有感，也知道男性保養不是等出問題才開始。這類型最適合做的是建立簡單、能長期維持的習慣：睡眠、運動、飲食先顧好，再視自己的生活型態了解合適的保健補充方式。"
+      }
+    };
+
+    // 新測驗替換區：第二題 A、B、C、D 對應的個人化內容。
+    const DETAILS = {
+      A: "你的第一優先是把睡眠節奏穩定下來。比起偶爾睡很久，更重要的是固定上床、固定起床，並減少連續熬夜。",
+      B: "壓力會讓人覺得自己一直在運轉。先替每天留一小段真正不用處理工作的時間，讓大腦有明確的下班訊號。",
+      C: "久坐很容易讓整天都處在低活動量。從短時間走路、簡單阻力訓練開始，比突然逼自己做高強度運動更容易維持。",
+      D: "外食與應酬多時，不用追求完美飲食。先顧蛋白質、蔬菜、水分與規律吃飯，再慢慢調整酒精和宵夜頻率。"
+    };
+
+    // 新測驗替換區：第三題 A、B、C、D 對應的個人化行動。
+    const ACTIONS = {
+      A: "接下來 7 天先固定一個上床時間，觀察下午掉電和早上起床的狀態有沒有變化。",
+      B: "先安排每週 2～3 次、每次 20～30 分鐘的活動。重點是固定做到，不是一次練到沒力。",
+      C: "從今天開始，把一餐調整得更完整，並把每日喝水量和應酬次數記下來，先找到最容易改善的地方。",
+      D: "先把生活基本盤顧住，再閱讀男性保健品的成分與使用方式。若要補充瑪卡，也把它當成日常保養的一部分，而不是取代睡眠、運動或飲食。"
+    };
+
+    // 通用介面文字通常不需修改；如需換語言，可集中在此調整。
+    const UI_TEXT = {
+      heroSupporting: "三題完成，不到一分鐘",
+      quizLabel: "柔柔男性日常狀態測驗",
+      next: "下一題",
+      previous: "回上一題",
+      viewResult: "查看我的結果",
+      calculating: "正在整理你的三個答案",
+      resultKicker: "YOUR RESULT",
+      analysisLabel: "你的目前狀態",
+      detailLabel: "最該先處理的地方",
+      actionLabel: "你可以先這樣做",
+      restart: "重新測驗",
+      unsetCta: "銷售頁連結待補"
+    };
+
+    /* ====================== 通用功能區：通常不需修改 ====================== */
+    const ids = [
+      "cover", "quiz-screen", "loading-screen", "result-screen", "category-label",
+      "hero-title", "hero-subtitle", "hero-supporting", "intro-title", "intro-text",
+      "start-button", "duration", "quiz-label", "question-count", "progress",
+      "progress-fill", "question-number", "question-title", "question-hint", "options",
+      "next-button", "back-button", "loading-text", "result-kicker", "result-title",
+      "result-summary", "analysis-label", "result-analysis", "detail-label", "result-detail",
+      "action-label", "result-action", "cta-title", "cta-description", "cta-button",
+      "restart-button", "disclaimer"
+    ];
+    const element = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+    const answers = Array(QUESTIONS.length).fill(null);
+    let currentQuestion = 0;
+
+    function applyTheme() {
+      const root = document.documentElement;
+      root.style.setProperty("--background", THEME_CONFIG.backgroundColor);
+      root.style.setProperty("--primary", THEME_CONFIG.primaryColor);
+      root.style.setProperty("--accent", THEME_CONFIG.accentColor);
+      root.style.setProperty("--text", THEME_CONFIG.textColor);
+      root.style.setProperty("--card", THEME_CONFIG.cardColor);
+      root.style.setProperty("--font", THEME_CONFIG.fontStyle);
+      document.body.dataset.visualStyle = THEME_CONFIG.visualStyle;
+    }
+
+    function renderSite() {
+      document.title = SITE_CONFIG.pageTitle;
+      document.querySelector('meta[name="description"]').content = SITE_CONFIG.description;
+      element["category-label"].textContent = SITE_CONFIG.categoryLabel;
+      element["hero-title"].textContent = SITE_CONFIG.heroTitle;
+      element["hero-subtitle"].textContent = SITE_CONFIG.heroSubtitle;
+      element["hero-supporting"].textContent = UI_TEXT.heroSupporting;
+      element["intro-title"].textContent = SITE_CONFIG.introTitle;
+      element["intro-text"].textContent = SITE_CONFIG.introText;
+      element["start-button"].textContent = SITE_CONFIG.startButtonText;
+      element.duration.textContent = UI_TEXT.heroSupporting;
+      element["quiz-label"].textContent = UI_TEXT.quizLabel;
+      element["back-button"].textContent = UI_TEXT.previous;
+      element["loading-text"].textContent = UI_TEXT.calculating;
+      element["result-kicker"].textContent = UI_TEXT.resultKicker;
+      element["analysis-label"].textContent = UI_TEXT.analysisLabel;
+      element["detail-label"].textContent = UI_TEXT.detailLabel;
+      element["action-label"].textContent = UI_TEXT.actionLabel;
+      element["cta-title"].textContent = SITE_CONFIG.ctaTitle;
+      element["cta-description"].textContent = SITE_CONFIG.ctaDescription;
+      element["restart-button"].textContent = UI_TEXT.restart;
+      element.disclaimer.textContent = SITE_CONFIG.disclaimer;
+      renderCta();
+    }
+
+    function renderCta() {
+      const url = SITE_CONFIG.ctaUrl.trim();
+      if (!url) {
+        element["cta-button"].textContent = UI_TEXT.unsetCta;
+        element["cta-button"].removeAttribute("href");
+        element["cta-button"].setAttribute("aria-disabled", "true");
+        element["cta-button"].setAttribute("role", "button");
+        return;
+      }
+      element["cta-button"].textContent = SITE_CONFIG.ctaButtonText;
+      element["cta-button"].href = url;
+      element["cta-button"].removeAttribute("aria-disabled");
+      element["cta-button"].removeAttribute("role");
+    }
+
+    function showScreen(screen) {
+      [element.cover, element["quiz-screen"], element["loading-screen"], element["result-screen"]]
+        .forEach(item => { item.hidden = item !== screen; });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuestion() {
+      const question = QUESTIONS[currentQuestion];
+      element["question-count"].textContent = `${currentQuestion + 1} / ${QUESTIONS.length}`;
+      element.progress.setAttribute("aria-valuenow", String(currentQuestion + 1));
+      element["progress-fill"].style.width = `${((currentQuestion + 1) / QUESTIONS.length) * 100}%`;
+      element["question-number"].textContent = question.label;
+      element["question-title"].textContent = question.title;
+      element["question-hint"].textContent = question.hint;
+      element.options.replaceChildren(...Object.entries(question.options).map(([letter, text]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `option${answers[currentQuestion] === letter ? " selected" : ""}`;
+        button.setAttribute("aria-pressed", String(answers[currentQuestion] === letter));
+        const badge = document.createElement("span");
+        badge.className = "option-letter";
+        badge.textContent = letter;
+        const copy = document.createElement("span");
+        copy.textContent = text;
+        button.append(badge, copy);
+        button.addEventListener("click", () => selectAnswer(letter));
+        return button;
+      }));
+      element["next-button"].textContent = currentQuestion === QUESTIONS.length - 1 ? UI_TEXT.viewResult : UI_TEXT.next;
+      element["next-button"].disabled = answers[currentQuestion] === null;
+      element["back-button"].hidden = currentQuestion === 0;
+    }
+
+    function selectAnswer(letter) {
+      answers[currentQuestion] = letter;
+      renderQuestion();
+    }
+
+    function renderResult() {
+      const result = RESULTS[answers[0]];
+      element["result-title"].textContent = result.title;
+      element["result-summary"].textContent = result.summary;
+      element["result-analysis"].textContent = result.analysis;
+      element["result-detail"].textContent = DETAILS[answers[1]];
+      element["result-action"].textContent = ACTIONS[answers[2]];
+      showScreen(element["result-screen"]);
+    }
+
+    function nextQuestion() {
+      if (answers[currentQuestion] === null) return;
+      if (currentQuestion < QUESTIONS.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        showScreen(element["quiz-screen"]);
+        return;
+      }
+      showScreen(element["loading-screen"]);
+      window.setTimeout(renderResult, 1000);
+    }
+
+    function previousQuestion() {
+      if (currentQuestion === 0) return;
+      currentQuestion -= 1;
+      renderQuestion();
+      showScreen(element["quiz-screen"]);
+    }
+
+    function restartQuiz() {
+      answers.fill(null);
+      currentQuestion = 0;
+      renderQuestion();
+      showScreen(element.cover);
+    }
+
+    element["start-button"].addEventListener("click", () => {
+      currentQuestion = 0;
+      renderQuestion();
+      showScreen(element["quiz-screen"]);
+    });
+    element["next-button"].addEventListener("click", nextQuestion);
+    element["back-button"].addEventListener("click", previousQuestion);
+    element["restart-button"].addEventListener("click", restartQuiz);
+    element["cta-button"].addEventListener("click", event => {
+      if (!SITE_CONFIG.ctaUrl.trim()) event.preventDefault();
+    });
+
+    applyTheme();
+    renderSite();
+    renderQuestion();
+  </script>
+</body>
+</html>
